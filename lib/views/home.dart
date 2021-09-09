@@ -1,4 +1,5 @@
 import 'package:fcsc_admin/views/scanner.dart';
+import 'package:fcsc_admin/views/validation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ),
                     hintText: "Email Address",
-                    hintStyle: GoogleFonts.kodchasan(
+                    hintStyle: GoogleFonts.lato(
                       fontSize: 14,
                     ),
                   )),
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     suffixIcon: Icon(Icons.visibility),
                     hintText: "Password",
-                    hintStyle: GoogleFonts.kodchasan(
+                    hintStyle: GoogleFonts.lato(
                       fontSize: 14,
                     ),
                   )),
@@ -101,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ScannerScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => ValidationScreen()),
                     );
                   },
                   child: Row(

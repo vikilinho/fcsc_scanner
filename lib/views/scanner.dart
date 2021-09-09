@@ -72,52 +72,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
                                 },
                               )),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(8),
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                await controller?.flipCamera();
-                                setState(() {});
-                              },
-                              child: FutureBuilder(
-                                future: controller?.getCameraInfo(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.data != null) {
-                                    return Text(
-                                        'Camera facing ${describeEnum(snapshot.data!)}');
-                                  } else {
-                                    return Text('loading');
-                                  }
-                                },
-                              )),
-                        )
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(8),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.pauseCamera();
-                            },
-                            child:
-                                Text('pause', style: TextStyle(fontSize: 20)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(8),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.resumeCamera();
-                            },
-                            child:
-                                Text('resume', style: TextStyle(fontSize: 20)),
-                          ),
-                        )
-                      ],
+                      children: <Widget>[],
                     ),
                   ],
                 ),
