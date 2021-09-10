@@ -1,4 +1,5 @@
 import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/views/user_card.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: HomeScreen());
+        home: UserCard());
   }
 }
