@@ -1,3 +1,4 @@
+import 'package:fcsc_admin/views/user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -9,7 +10,8 @@ class ValidationScreen extends StatefulWidget {
 }
 
 class _ValidationScreenState extends State<ValidationScreen> {
-  String output = '';
+  var output = "Output";
+
   Future<void> scanQRCode() async {
     try {
       final output = await FlutterBarcodeScanner.scanBarcode(
@@ -72,9 +74,11 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 60,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ))),
                     onPressed: () {
@@ -92,13 +96,15 @@ class _ValidationScreenState extends State<ValidationScreen> {
                       ],
                     )),
               ),
-
-              Center(
-                child: Text(
-                  output,
-                  style: GoogleFonts.lato(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Center(
+                  child: Text(
+                    output,
+                    style: GoogleFonts.lato(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -128,7 +134,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
               Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   height: 60,
-
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: TextField(
@@ -155,16 +160,18 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 60,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ))),
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => ScannerScreen()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserCard()),
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
