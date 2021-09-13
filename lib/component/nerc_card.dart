@@ -1,8 +1,10 @@
+import 'package:fcsc_admin/models/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewCardComponent extends StatelessWidget {
-  const NewCardComponent();
+  final Validation validation;
+  NewCardComponent({required this.validation});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,11 @@ class NewCardComponent extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 8.0, top: 8.0, bottom: 8.0),
                       child: Text(
-                        "Helena Joans\nAdam",
+                        validation.firstName +
+                            validation.middleName +
+                            validation.lastName,
                         style: GoogleFonts.lato(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                     ),
                     CircleAvatar(
@@ -70,7 +72,7 @@ class NewCardComponent extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "NERC-05-2021-K46GD-HB612JE9HB",
+                      validation.serialNo,
                       style: GoogleFonts.lato(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -86,7 +88,8 @@ class NewCardComponent extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundColor: Colors.transparent,
-                        backgroundImage: AssetImage('images/college.jpeg'),
+                        backgroundImage:
+                            NetworkImage(validation.applicantPassportURL),
                       ),
                     )
                   ],
@@ -108,7 +111,7 @@ class NewCardComponent extends StatelessWidget {
                             width: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('images/barcode.png'),
+                                image: NetworkImage(validation.qrCodeURL),
                               ),
                               color: Colors.transparent,
                             ),
