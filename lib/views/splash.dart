@@ -26,15 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(
           Duration(milliseconds: 0),
               () => Get.off(finalPass == null
-              ? ValidationScreen()
-              : HomeScreen()));
+              ? HomeScreen()
+              : ValidationScreen()));
     });
     super.initState();
   }
 
   Future getMyTk() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var tokenObtained = prefs.getString('token');
+    var tokenObtained = prefs.getString('pass');
+    print(tokenObtained);
     setState(() {
       finalPass = tokenObtained;
 

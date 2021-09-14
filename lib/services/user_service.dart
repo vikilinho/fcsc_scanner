@@ -9,11 +9,5 @@ class UserService extends GetConnect {
     Response response = await post('$BASE_URL/Auth/Login', login.toJson());
     return response;
   }
-  Future<Response> scanCard() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    Map<String, String> headers = {'Authorization': 'Bearer $token'};
-    Response response = await get('$BASE_URL/Candidates/ControlNo/$finalOutput', headers: headers);
-    return response;
-  }
+
 }

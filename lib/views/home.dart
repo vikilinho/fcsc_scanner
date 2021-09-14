@@ -167,11 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       )),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("Forgot password"),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text("Forgot password"),
+                    ],
+                  ),
                 )
               ],
             )),
