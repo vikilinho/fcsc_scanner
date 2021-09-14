@@ -4,9 +4,9 @@ import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/dashboard.dart';
 
-import 'package:fcsc_admin/models/validation.dart';
+
 import 'package:fcsc_admin/views/home.dart';
-import 'package:fcsc_admin/views/user_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';

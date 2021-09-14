@@ -1,6 +1,5 @@
-import 'dart:convert';
 
-import 'package:fcsc_admin/component/constants.dart';
+
 import 'package:fcsc_admin/controller/login_controller.dart';
 import 'package:fcsc_admin/models/login.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +8,9 @@ import 'package:get/get.dart';
 
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -52,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     key: _formKey,
                     child: Column(children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       height: 70,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       height: 70,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -104,12 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               enabledBorder: InputBorder.none,
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                    backgroundColor: Colors.green,
-                                    child: Icon(
-                                      Icons.security_outlined,
-                                      color: Colors.white,
-                                    )),
+                                child: Icon(
+                                  Icons.security_outlined,
+                                  color: Colors.green,
+                                ),
                               ),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -138,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.85,
                   height: 70,
                   child: ElevatedButton(
                       style: ButtonStyle(
@@ -167,15 +164,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("Forgot password"),
-                    ],
-                  ),
-                )
+                // Padding(
+                //   padding: const EdgeInsets.all(15.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       Text("Forgot password"),
+                //     ],
+                //   ),
+                // )
               ],
             )),
           )),
