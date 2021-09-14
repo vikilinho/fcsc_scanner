@@ -13,11 +13,14 @@ class ProgressBar extends StatelessWidget {
       elevation: 0.0,
       child:
       Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Text(message,
               style: GoogleFonts.mulish(
                 fontSize: 20.0,

@@ -216,7 +216,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return ProgressBar(message: "Validating candidate...");
+          return ProgressBar(message: "Validating candidate...",);
         });
     final prefs = await SharedPreferences.getInstance();
 
