@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fcsc_admin">
+    <!-- Required to fetch data from the internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Testmi"
         android:icon="@mipmap/launcher_icon">
@@ -37,8 +39,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <!-- Required to fetch data from the internet. -->
-       <uses-permission android:name="android.permission.INTERNET" />
+
 
    </application>
 </manifest>
