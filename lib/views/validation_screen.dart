@@ -55,6 +55,9 @@ class _ValidationScreenState extends State<ValidationScreen> {
           child: Container(
               child: Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Center(
                 child: Text(
                   "Welcome Back!",
@@ -93,7 +96,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Scan Card',
+                        Text('Scan Exam Card',
                             style: GoogleFonts.lato(
                               color: Colors.white,
                               fontSize: 16,
@@ -101,18 +104,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
                             )),
                       ],
                     )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Center(
-                  child: Text(
-                    output,
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
               ),
               SizedBox(
                 height: 20,
@@ -128,7 +119,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 20,
               ),
               Text(
-                "Validate Exam Number",
+                "Enter Candidate Number",
                 style: GoogleFonts.lato(
                   fontSize: 20,
                   color: Colors.black,
@@ -192,14 +183,26 @@ class _ValidationScreenState extends State<ValidationScreen> {
                       ],
                     )),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    Get.to(HomeScreen());
-                    final SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.remove('pass');
-                  },
-                  child: Text("Logout")),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                        ),
+                        onPressed: () async {
+                          Get.to(HomeScreen());
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.remove('pass');
+                        },
+                        child: Text("Log Out")),
+                  ],
+                ),
+              ),
             ],
           )),
         ),
@@ -226,7 +229,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
       case 200:
         var mybody = Dashboard.fromJson(jsonDecode(response.body));
         print(response.statusCode);
-        print("I am here");
 
         Get.defaultDialog(
             title: "",
