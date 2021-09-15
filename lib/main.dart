@@ -1,7 +1,7 @@
 import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/views/splash.dart';
-import 'package:fcsc_admin/views/user_card.dart';
+
 import 'package:fcsc_admin/views/validation_screen.dart';
 
 import 'package:flutter/material.dart';

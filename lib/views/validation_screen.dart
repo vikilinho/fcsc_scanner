@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
-import 'package:fcsc_admin/models/dashboard.dart';
-
 
 import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/models/validator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -211,12 +210,14 @@ class _ValidationScreenState extends State<ValidationScreen> {
   }
 
   //The method for validating the card... once user scan the card
-  Future<Dashboard> scanCard() async {
+  Future<Validator> scanCard() async {
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return ProgressBar(message: "Validating candidate...",);
+          return ProgressBar(
+            message: "Validating candidate...",
+          );
         });
     final prefs = await SharedPreferences.getInstance();
 
@@ -227,7 +228,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Dashboard.fromJson(jsonDecode(response.body));
+        var mybody = Validator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
 
         Get.defaultDialog(
@@ -404,7 +405,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
   }
 
   //Method that validate exam number
-  Future<Dashboard> validateNumber() async {
+  Future<Validator> validateNumber() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -421,7 +422,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Dashboard.fromJson(jsonDecode(response.body));
+        var mybody = Validator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
         print("I am here");
 
@@ -498,7 +499,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                   ),
                                 ),
                                 Text(
-                                  mybody.objectValue.controlNo,
+                                  mybody.objectValue.examNo,
                                   style: GoogleFonts.lato(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
