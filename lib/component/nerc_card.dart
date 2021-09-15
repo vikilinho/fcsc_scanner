@@ -1,11 +1,7 @@
-import 'package:fcsc_admin/models/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewCardComponent extends StatelessWidget {
-  final Validation validation;
-  NewCardComponent({required this.validation});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,9 +25,7 @@ class NewCardComponent extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 8.0, top: 8.0, bottom: 8.0),
                       child: Text(
-                        validation.firstName +
-                            validation.middleName +
-                            validation.lastName,
+                        "Name",
                         style: GoogleFonts.lato(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
@@ -72,7 +66,7 @@ class NewCardComponent extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      validation.serialNo,
+                      "serialNo",
                       style: GoogleFonts.lato(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -88,8 +82,7 @@ class NewCardComponent extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundColor: Colors.transparent,
-                        backgroundImage:
-                            NetworkImage(validation.applicantPassportURL),
+                        backgroundImage: NetworkImage("applicantPassportURL"),
                       ),
                     )
                   ],
@@ -111,7 +104,7 @@ class NewCardComponent extends StatelessWidget {
                             width: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(validation.qrCodeURL),
+                                image: NetworkImage("qrCodeURL"),
                               ),
                               color: Colors.transparent,
                             ),
