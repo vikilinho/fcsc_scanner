@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
-
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
 
@@ -304,7 +303,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                   ),
                                 ),
                                 Text(
-                                  mybody.objectValue.controlNo,
+                                  mybody.objectValue.examNo,
                                   style: GoogleFonts.lato(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
