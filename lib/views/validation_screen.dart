@@ -66,18 +66,18 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width * 0.02,
+                height: MediaQuery.of(context).size.width * 0.04,
               ),
               CircleAvatar(
-                radius: 100,
+                radius: 85,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('images/logo.png'),
+                backgroundImage: AssetImage('images/1024.png'),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width * 0.002,
+                height: MediaQuery.of(context).size.width * 0.08,
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.6,
+                width: MediaQuery.of(context).size.width * 0.8,
                 height: 60,
                 child: ElevatedButton(
                     style: ButtonStyle(
@@ -117,7 +117,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 20,
               ),
               Text(
-                "Enter Candidate Number",
+                "Enter Candidate Control Number",
                 style: GoogleFonts.lato(
                   fontSize: 20,
                   color: Colors.black,
@@ -127,7 +127,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 20,
               ),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   height: 60,
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -155,7 +155,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 20,
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.6,
+                width: MediaQuery.of(context).size.width * 0.8,
                 height: 60,
                 child: ElevatedButton(
                     style: ButtonStyle(
@@ -256,8 +256,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                   child: Text(
                                     mybody.objectValue.firstName +
                                         " " +
-                                        mybody.objectValue.middleName +
-                                        "\n" +
+                                        " " +
                                         mybody.objectValue.lastName,
                                     style: GoogleFonts.lato(
                                       fontSize: 20,
@@ -451,8 +450,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                   child: Text(
                                     mybody.objectValue.firstName +
                                         " " +
-                                        mybody.objectValue.middleName +
-                                        "\n" +
+                                        " " +
                                         mybody.objectValue.lastName,
                                     style: GoogleFonts.lato(
                                       fontSize: 20,

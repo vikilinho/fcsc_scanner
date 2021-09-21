@@ -35,7 +35,6 @@ class Validator {
 class ObjectValue {
   ObjectValue({
     required this.firstName,
-    required this.middleName,
     required this.lastName,
     required this.applicantPassportUrl,
     required this.qrCodeUrl,
@@ -45,7 +44,7 @@ class ObjectValue {
   });
 
   String firstName;
-  String middleName;
+
   String lastName;
 
   String applicantPassportUrl;
@@ -56,7 +55,6 @@ class ObjectValue {
 
   factory ObjectValue.fromJson(Map<String, dynamic> json) => ObjectValue(
         firstName: json["firstName"],
-        middleName: json["middleName"],
         lastName: json["lastName"],
         applicantPassportUrl: json["applicantPassportURL"],
         qrCodeUrl: json["qrCodeURL"],
@@ -67,7 +65,6 @@ class ObjectValue {
 
   Map<String, dynamic> toJson() => {
         "firstName": firstName,
-        "middleName": middleName,
         "lastName": lastName,
         "applicantPassportURL": applicantPassportUrl,
         "qrCodeURL": qrCodeUrl,
