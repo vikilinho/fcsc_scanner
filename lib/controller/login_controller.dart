@@ -3,6 +3,7 @@ import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/services/user_service.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/views/validation_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,12 +21,16 @@ class LoginController extends GetxController {
       case 200:
         var resp = response.body["objectValue"];
         prefs.setString('pass', resp['token']);
-        Get.snackbar('Login', "Login Successful");
-       Get.to(ValidationScreen());
+        Get.snackbar("Login Successful", "",
+            duration: Duration(seconds: 5),
+            colorText: Colors.white,
+            backgroundColor: Colors.green);
+        Get.to(ValidationScreen());
         break;
       case 400:
         print(response.statusCode);
-        Get.snackbar('Login', "Invalid Credentials");
+        Get.snackbar('Error!', "Invalid Credentials",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
     }
   }
 }

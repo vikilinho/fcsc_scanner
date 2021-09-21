@@ -390,13 +390,18 @@ class _ValidationScreenState extends State<ValidationScreen> {
             ));
         return mybody;
       case 400:
-        Get.snackbar("title", "Unauthorised");
+        Get.snackbar("Error!", "Check candidate number",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
         break;
       case 401:
-        Get.snackbar("Invalide", "User not found");
+        Get.snackbar("Error", "Unauthorised",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 500:
+        Get.snackbar("Opps!", "Server Error");
     }
 
-    Get.snackbar("Invalid Candidate", "Candidate not found",
+    Get.snackbar("Error", "Candidate not found",
         colorText: Colors.white, backgroundColor: Colors.pinkAccent);
     print(response.statusCode);
     throw Exception('Failed to to get user details');
@@ -583,16 +588,24 @@ class _ValidationScreenState extends State<ValidationScreen> {
               ],
             ));
         return mybody;
+
       case 400:
-        Get.snackbar("title", "Unauthorised");
+        Get.snackbar("Error!", "Check candidate number",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
         break;
       case 401:
-        Get.snackbar("Invalide", "User not found");
+        Get.snackbar("Error", "Unauthorised",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 500:
+        Get.snackbar("Opps!", "Server Error");
     }
 
-    Get.snackbar("Invalid Candidate", "Candidate not found",
-        colorText: Colors.white, backgroundColor: Colors.pinkAccent);
-    print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar("Error", "Candidate not found",
+          colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+      print(response.statusCode);
+    }
     throw Exception('Failed to to get user details');
   }
 }
