@@ -19,30 +19,41 @@ class ValidationScreen extends StatefulWidget {
 }
 
 class _ValidationScreenState extends State<ValidationScreen> {
-  var output = "";
+  // var output = "";
+  String? controlNumber = "";
+  String newValue = "";
 
   TextEditingController _examController = TextEditingController();
   var examNo;
 
   Future<void> scanQRCode() async {
+    // String controlNumber;
     try {
-      final output = await FlutterBarcodeScanner.scanBarcode(
+      controlNumber = await FlutterBarcodeScanner.scanBarcode(
         '#ff38AA5F',
         'Cancel',
         true,
         ScanMode.QR,
-      );
-
-      if (!mounted) return;
-
-      setState(() {
-        this.output = output;
-        //once the code has been scanned, the endpoint is called using the output as parameter
-        scanCard();
+      ).then((value) {
+        setState(() {
+          newValue = value;
+          if (newValue != "-1") {
+            scanCard();
+          }
+        });
       });
     } on PlatformException {
-      output = 'Failed to get platform version.';
+      controlNumber = 'Failed to get platform version.';
     }
+    if (!mounted) return;
+
+    // setState(() async {
+    //   this.controlNumber = controlNumber;
+    //   // if (controlNumber != null) {
+    //   //   scanCard();
+
+    //   //once the code has been scanned, the endpoint is called using the output as parameter
+    // });
   }
 
   @override
@@ -139,7 +150,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
-                          hintText: "Exam Number",
+                          hintText: "NERC/10/2021/",
                           hintStyle: GoogleFonts.lato(
                             fontSize: 14,
                           ),
@@ -221,7 +232,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$output');
+    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
     final response = await http.get(endpoint, headers: headers);
     Navigator.pop(context);
