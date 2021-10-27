@@ -46,14 +46,6 @@ class _ValidationScreenState extends State<ValidationScreen> {
       controlNumber = 'Failed to get platform version.';
     }
     if (!mounted) return;
-
-    // setState(() async {
-    //   this.controlNumber = controlNumber;
-    //   // if (controlNumber != null) {
-    //   //   scanCard();
-
-    //   //once the code has been scanned, the endpoint is called using the output as parameter
-    // });
   }
 
   @override
@@ -128,7 +120,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                 height: 20,
               ),
               Text(
-                "Enter Candidate Control Number",
+                "Enter Candidate Exam Number",
                 style: GoogleFonts.lato(
                   fontSize: 20,
                   color: Colors.black,
@@ -150,7 +142,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
-                          hintText: "NERC/10/2021/",
+                          hintText: "ywsq2656RR",
                           hintStyle: GoogleFonts.lato(
                             fontSize: 14,
                           ),
@@ -232,7 +224,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
+    var endpoint = Uri.parse('$BASE_URL/Candidates/SerialNo/$newValue');
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
     final response = await http.get(endpoint, headers: headers);
     Navigator.pop(context);
@@ -429,7 +421,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$examNo');
+    var endpoint = Uri.parse('$BASE_URL/Candidates/SerialNo/$examNo');
     print(examNo);
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
     final response = await http.get(endpoint, headers: headers);
