@@ -1,7 +1,8 @@
 import 'package:fcsc_admin/locator.dart';
 import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/services/user_service.dart';
-import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/views/new_validationScreen.dart';
+
 import 'package:fcsc_admin/views/validation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class LoginController extends GetxController {
             duration: Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.green);
-        Get.to(ValidationScreen());
+        Get.to(NewValidationScreen());
         break;
       case 400:
         print(response.statusCode);

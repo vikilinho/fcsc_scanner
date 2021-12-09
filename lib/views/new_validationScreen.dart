@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
+import 'package:fcsc_admin/models/new_validator.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
 
@@ -13,12 +14,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ValidationScreen extends StatefulWidget {
+class NewValidationScreen extends StatefulWidget {
   @override
-  _ValidationScreenState createState() => _ValidationScreenState();
+  _NewValidationScreenState createState() => _NewValidationScreenState();
 }
 
-class _ValidationScreenState extends State<ValidationScreen> {
+class _NewValidationScreenState extends State<NewValidationScreen> {
   // var output = "";
   String? controlNumber = "";
   String newValue = "";
@@ -212,7 +213,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
   }
 
   //The method for validating the card... once user scan the card
-  Future<Validator> scanCard() async {
+  Future<NewValidator> scanCard() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -230,13 +231,16 @@ class _ValidationScreenState extends State<ValidationScreen> {
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Validator.fromJson(jsonDecode(response.body));
+        var mybody = NewValidator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
 
         Get.defaultDialog(
             title: "",
             content: Column(
               children: [
+                SizedBox(
+                  height: 30,
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -251,79 +255,44 @@ class _ValidationScreenState extends State<ValidationScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, top: 8.0, bottom: 8.0),
-                                  child: Text(
-                                    mybody.objectValue.firstName +
-                                        " " +
-                                        " " +
-                                        mybody.objectValue.lastName,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5, left: 5),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    shape: BoxShape.circle,
                                   ),
-                                ),
-                                CircleAvatar(
-                                  radius: 35,
-                                  backgroundColor: Colors.green,
-                                  backgroundImage:
-                                      AssetImage('images/nerc_logo.png'),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage('images/logo.png'),
+                                  ),
                                 )
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 12.0, right: 8.0, bottom: 12.0),
+                                        left: 12.0, right: 12.0, bottom: 12.0),
                                     child: Text(
                                       "Exam ID Card",
                                       style: GoogleFonts.lato(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ))
                               ],
                             ),
                             Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, right: 5.0),
-                                  child: Text(
-                                    "Exam No:",
-                                    style: GoogleFonts.lato(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  mybody.objectValue.examNo,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 70,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: NetworkImage(mybody
-                                        .objectValue.applicantPassportUrl),
-                                  ),
+                                CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      AssetImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
@@ -337,14 +306,47 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                 height: MediaQuery.of(context).size.height / 2,
                                 width: 370,
                                 child: Column(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8.0),
+                                    child: Text(
+                                      mybody.objectValue.firstName +
+                                          "" +
+                                          mybody.objectValue.lastName,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 5.0),
+                                        child: Text(
+                                          "Exam No:",
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        mybody.objectValue.examNo,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                2,
-                                        width: 200,
+                                        height: 150,
+                                        width: 150,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: NetworkImage(
@@ -355,36 +357,54 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Only Valid For 1 Exam",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.copyright,
-                                          color: Colors.black, size: 14),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "2021 Testmi",
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.09,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.20,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                image: AssetImage(
+                                                    'images/signature.png'),
+                                              ))),
                                         ),
+                                      ]),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 12.0),
+                                        child:
+                                            Text(mybody.objectValue.signature,
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12,
+                                                )),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ]),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Only Valid For 1 Exam",
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            )
                           ]),
                     ),
                   ),
@@ -411,7 +431,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
   }
 
   //Method that validate exam number
-  Future<Validator> validateNumber() async {
+  Future<NewValidator> validateNumber() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -428,7 +448,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Validator.fromJson(jsonDecode(response.body));
+        var mybody = NewValidator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
         print("I am here");
 
@@ -436,6 +456,9 @@ class _ValidationScreenState extends State<ValidationScreen> {
             title: "",
             content: Column(
               children: [
+                SizedBox(
+                  height: 30,
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -450,79 +473,44 @@ class _ValidationScreenState extends State<ValidationScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, top: 8.0, bottom: 8.0),
-                                  child: Text(
-                                    mybody.objectValue.firstName +
-                                        " " +
-                                        " " +
-                                        mybody.objectValue.lastName,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5, left: 5),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    shape: BoxShape.circle,
                                   ),
-                                ),
-                                CircleAvatar(
-                                  radius: 35,
-                                  backgroundColor: Colors.green,
-                                  backgroundImage:
-                                      AssetImage('images/nerc_logo.png'),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage('images/logo.png'),
+                                  ),
                                 )
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 12.0, right: 8.0, bottom: 12.0),
+                                        left: 12.0, right: 12.0, bottom: 12.0),
                                     child: Text(
                                       "Exam ID Card",
                                       style: GoogleFonts.lato(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ))
                               ],
                             ),
                             Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, right: 5.0),
-                                  child: Text(
-                                    "Exam No:",
-                                    style: GoogleFonts.lato(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  mybody.objectValue.examNo,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 70,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: NetworkImage(mybody
-                                        .objectValue.applicantPassportUrl),
-                                  ),
+                                CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      AssetImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
@@ -536,14 +524,47 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                 height: MediaQuery.of(context).size.height / 2,
                                 width: 370,
                                 child: Column(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8.0),
+                                    child: Text(
+                                      mybody.objectValue.firstName +
+                                          " " +
+                                          mybody.objectValue.lastName,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 5.0),
+                                        child: Text(
+                                          "Exam No:",
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        mybody.objectValue.examNo,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                2,
-                                        width: 200,
+                                        height: 150,
+                                        width: 150,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: NetworkImage(
@@ -554,36 +575,53 @@ class _ValidationScreenState extends State<ValidationScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Only Valid For 1 Exam",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.copyright,
-                                          color: Colors.black, size: 14),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "2021 Testmi",
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.09,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.20,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                image: NetworkImage(mybody
+                                                    .objectValue.signature),
+                                              ))),
                                         ),
+                                      ]),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 12.0),
+                                        child: Text("signature",
+                                            style: GoogleFonts.lato(
+                                              fontSize: 12,
+                                            )),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ]),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Only Valid For 1 Exam",
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            )
                           ]),
                     ),
                   ),

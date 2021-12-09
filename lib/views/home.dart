@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // ignore: non_constant_identifier_names
   TextEditingController _email_address = TextEditingController();
   TextEditingController _password = TextEditingController();
 
@@ -58,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: TextFormField(
+                                          autocorrect: false,
+                                          enableSuggestions: false,
                                           validator: (String? email) => email!
                                                   .isEmpty
                                               ? 'Please enter your email address'
@@ -99,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: TextFormField(
+                                          enableSuggestions: false,
                                           obscureText:
                                               !model.isPasswordVisible.value,
                                           validator: (String? password) =>

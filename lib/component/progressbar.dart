@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class ProgressBar extends StatelessWidget {
   String message;
   ProgressBar({required this.message});
@@ -12,7 +13,7 @@ class ProgressBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       child:
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: CircularProgressIndicator(

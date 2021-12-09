@@ -1,4 +1,3 @@
-import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/views/splash.dart';
 
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'locator.dart';
+import 'views/new_validationScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/HomeScreen': (context) => HomeScreen(),
         '/validationScreen': (context) => ValidationScreen(),
         '/SplashScreen': (context) => SplashScreen(),
+        '/NewValidationScreen': (context) => NewValidationScreen(),
       },
       initialRoute: '/SplashScreen',
     );
