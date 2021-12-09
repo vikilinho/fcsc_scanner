@@ -143,7 +143,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
-                          hintText: "ywsq2656RR",
+                          hintText: "ywsq2656",
                           hintStyle: GoogleFonts.lato(
                             fontSize: 14,
                           ),
@@ -292,7 +292,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                   radius: 70,
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      AssetImage(mybody.objectValue.picture),
+                                      NetworkImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
@@ -311,7 +311,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                         top: 8.0, bottom: 8.0),
                                     child: Text(
                                       mybody.objectValue.firstName +
-                                          "" +
+                                          " " +
                                           mybody.objectValue.lastName,
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
@@ -374,8 +374,8 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                                   0.20,
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                image: AssetImage(
-                                                    'images/signature.png'),
+                                                image: NetworkImage(mybody
+                                                    .objectValue.signature),
                                               ))),
                                         ),
                                       ]),
@@ -510,7 +510,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                   radius: 70,
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      AssetImage(mybody.objectValue.picture),
+                                      NetworkImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
