@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
+import 'package:fcsc_admin/views/accreditation.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
 
@@ -69,13 +70,16 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                   ),
                 ),
               ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('images/ixam_edited.png')),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.04,
-              ),
-              CircleAvatar(
-                radius: 85,
-                backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('images/1024.png'),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.08,
@@ -213,7 +217,8 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
   }
 
   //The method for validating the card... once user scan the card
-  Future<NewValidator> scanCard() async {
+
+  Future<Accreditation> scanCard() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -225,13 +230,16 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
+    // var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
+    var newEndpoint = Uri.parse(
+        '$BASE_URL/Accreditation/get-accreditation-serialno?serialNo=$newValue');
+
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(endpoint, headers: headers);
+    final response = await http.get(newEndpoint, headers: headers);
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = NewValidator.fromJson(jsonDecode(response.body));
+        var mybody = Accreditation.fromJson(jsonDecode(response.body));
         print(response.statusCode);
 
         Get.defaultDialog(
@@ -292,7 +300,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                   radius: 70,
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      NetworkImage(mybody.objectValue.picture),
+                                      NetworkImage(mybody.response.passportUrl),
                                 )
                               ],
                             ),
@@ -310,9 +318,9 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8.0),
                                     child: Text(
-                                      mybody.objectValue.firstName +
+                                      mybody.response.firstName +
                                           " " +
-                                          mybody.objectValue.lastName,
+                                          mybody.response.lastName,
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600,
@@ -333,7 +341,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                         ),
                                       ),
                                       Text(
-                                        mybody.objectValue.examNo,
+                                        mybody.response.examNo,
                                         style: GoogleFonts.lato(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
@@ -350,7 +358,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                                mybody.objectValue.qrCodeUrl),
+                                                mybody.response.qrCodeUrl),
                                           ),
                                           color: Colors.transparent,
                                         ),
@@ -375,7 +383,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
                                                 image: NetworkImage(mybody
-                                                    .objectValue.signature),
+                                                    .response.signatureUrl),
                                               ))),
                                         ),
                                       ]),
@@ -384,11 +392,10 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(right: 12.0),
-                                        child:
-                                            Text(mybody.objectValue.signature,
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 12,
-                                                )),
+                                        child: Text("Signature",
+                                            style: GoogleFonts.lato(
+                                              fontSize: 12,
+                                            )),
                                       ),
                                     ],
                                   ),
@@ -431,7 +438,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
   }
 
   //Method that validate exam number
-  Future<NewValidator> validateNumber() async {
+  Future<Accreditation> validateNumber() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -441,14 +448,16 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$examNo');
+    var newEndpoint = Uri.parse(
+        '$BASE_URL/Accreditation/get-accreditation-serialno?serialNo=$examNo');
+
     print(examNo);
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(endpoint, headers: headers);
+    final response = await http.get(newEndpoint, headers: headers);
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = NewValidator.fromJson(jsonDecode(response.body));
+        var mybody = Accreditation.fromJson(jsonDecode(response.body));
         print(response.statusCode);
         print("I am here");
 
@@ -510,7 +519,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                   radius: 70,
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      NetworkImage(mybody.objectValue.picture),
+                                      NetworkImage(mybody.response.passportUrl),
                                 )
                               ],
                             ),
@@ -528,9 +537,9 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8.0),
                                     child: Text(
-                                      mybody.objectValue.firstName +
+                                      mybody.response.firstName +
                                           " " +
-                                          mybody.objectValue.lastName,
+                                          mybody.response.lastName,
                                       style: GoogleFonts.lato(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600,
@@ -551,7 +560,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                         ),
                                       ),
                                       Text(
-                                        mybody.objectValue.examNo,
+                                        mybody.response.examNo,
                                         style: GoogleFonts.lato(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
@@ -568,7 +577,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                                mybody.objectValue.qrCodeUrl),
+                                                mybody.response.qrCodeUrl),
                                           ),
                                           color: Colors.transparent,
                                         ),
@@ -593,7 +602,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
                                                 image: NetworkImage(mybody
-                                                    .objectValue.signature),
+                                                    .response.signatureUrl),
                                               ))),
                                         ),
                                       ]),

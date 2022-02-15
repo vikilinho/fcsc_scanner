@@ -22,8 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
     getMyTk().whenComplete(() async {
       Timer(
           Duration(milliseconds: 0),
-          () => Get.off(
-              finalPass == null ? HomeScreen() : NewValidationScreen()));
+          () =>
+              Get.to(finalPass == null ? HomeScreen() : NewValidationScreen()));
     });
     super.initState();
   }

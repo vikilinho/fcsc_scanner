@@ -1,5 +1,6 @@
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/views/splash.dart';
+import 'package:fcsc_admin/views/user_card.dart';
 
 import 'package:fcsc_admin/views/validation_screen.dart';
 
@@ -29,8 +30,9 @@ class MyApp extends StatelessWidget {
         '/validationScreen': (context) => ValidationScreen(),
         '/SplashScreen': (context) => SplashScreen(),
         '/NewValidationScreen': (context) => NewValidationScreen(),
+        '/Usercard': (context) => UserCard(),
       },
-      initialRoute: '/SplashScreen',
+      initialRoute: '/Usercard',
     );
   }
 }

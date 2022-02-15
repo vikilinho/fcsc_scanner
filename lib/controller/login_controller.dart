@@ -3,7 +3,6 @@ import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/services/user_service.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 
-import 'package:fcsc_admin/views/validation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +19,14 @@ class LoginController extends GetxController {
     isLoading.value = false;
     switch (response.statusCode) {
       case 200:
-        var resp = response.body["objectValue"];
-        prefs.setString('pass', resp['token']);
-        Get.snackbar("Login Successful", "",
+        var message = response.body['message'];
+        // print(resp);
+        print(message);
+        var token = response.body['response']['token'];
+        print(token);
+
+        prefs.setString('pass', token);
+        Get.snackbar("Login Successfull", "",
             duration: Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.green);

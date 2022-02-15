@@ -39,14 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                         child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 85,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage('images/1024.png'),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('images/ixam_edited.png')),
+                          ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.08,
-                        ),
+                            height: MediaQuery.of(context).size.height * 0.05),
 
                         Form(
                             key: _formKey,
