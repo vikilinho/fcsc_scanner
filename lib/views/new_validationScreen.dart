@@ -6,6 +6,7 @@ import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
+import 'package:fcsc_admin/views/user_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +42,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
           newValue = value;
           if (newValue != "-1") {
             // scanCard();
-            Get.to(IxamCard());
+            Get.to(UserCard());
           }
         });
       });
@@ -174,7 +175,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                         ))),
                     onPressed: () async {
                       // validateNumber();
-                      Get.to(IxamCard());
+                      Get.to(UserCard());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
