@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
-import 'package:fcsc_admin/views/accreditation.dart';
 import 'package:fcsc_admin/views/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
 
@@ -53,7 +52,6 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -71,16 +69,13 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                   ),
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('images/ixam_edited.png')),
-                ),
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.04,
+              ),
+              CircleAvatar(
+                radius: 85,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage('images/1024.png'),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 0.08,
@@ -218,8 +213,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
   }
 
   //The method for validating the card... once user scan the card
-
-  Future<Accreditation> scanCard() async {
+  Future<NewValidator> scanCard() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -231,223 +225,191 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    // var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
-    var newEndpoint = Uri.parse(
-        '$BASE_URL/Accreditation/get-accreditation-serialno?serialNo=$newValue');
-
+    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(newEndpoint, headers: headers);
+    final response = await http.get(endpoint, headers: headers);
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Accreditation.fromJson(jsonDecode(response.body));
+        var mybody = NewValidator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
 
         Get.defaultDialog(
             title: "",
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.75,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Column(
-                children: [
-                  Expanded(
+            content: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                              color: Colors.grey,
-                              width: 0.5,
-                              style: BorderStyle.solid),
-                          color: Colors.white),
-                      height: MediaQuery.of(context).size.height * 0.65,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                          border: Border.all(color: Colors.black),
+                          color: Colors.black12),
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage:
-                                      AssetImage('images/flogo.png'),
-                                ),
-                                Text(
-                                  "Promotional Exam\nAccreditation Tag 2021",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.green),
-                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5, left: 5),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage('images/logo.png'),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12.0, right: 12.0, bottom: 12.0),
+                                    child: Text(
+                                      "Exam ID Card",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ))
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: CircleAvatar(
-                                      radius: 70,
-                                      backgroundColor: Colors.transparent,
-                                      backgroundImage: NetworkImage(
-                                          mybody.response.passportUrl),
-                                    ))
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.12,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Text(
-                                    mybody.response.firstName +
-                                        " " +
-                                        mybody.response.lastName,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, right: 5.0),
-                                  child: Text(
-                                    "Exam No:",
-                                    style: GoogleFonts.lato(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  mybody.response.examNo,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.18,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            mybody.response.qrCodeUrl),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            mybody.response.signatureUrl),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
+                                CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
                             Expanded(
-                              flex: 4,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border:
+                                        Border.all(color: Colors.transparent),
+                                    color: Colors.white),
+                                height: MediaQuery.of(context).size.height / 2,
+                                width: 370,
+                                child: Column(children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 25.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8.0),
                                     child: Text(
-                                      mybody.response.serialNo,
+                                      mybody.objectValue.firstName +
+                                          " " +
+                                          mybody.objectValue.lastName,
                                       style: GoogleFonts.lato(
-                                        fontSize: 12,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.height *
-                                        0.01,
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 5.0),
+                                        child: Text(
+                                          "Exam No:",
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        mybody.objectValue.examNo,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text("Signature",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.height *
-                                        0.01,
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 150,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                mybody.objectValue.qrCodeUrl),
+                                          ),
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ],
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.09,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.20,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                image: NetworkImage(mybody
+                                                    .objectValue.signature),
+                                              ))),
+                                        ),
+                                      ]),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 12.0),
+                                        child:
+                                            Text(mybody.objectValue.signature,
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12,
+                                                )),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
                               ),
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: Text("Only Valid for 1 Exam",
-                                        style: GoogleFonts.lato(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                  ),
-                                  Expanded(
-                                    flex: 4,
-                                    child: Text(
-                                      "© iXam Portal",
-                                      style: GoogleFonts.mulish(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  )
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Only Valid For 1 Exam",
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             )
                           ]),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ));
         return mybody;
       case 400:
@@ -469,7 +431,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
   }
 
   //Method that validate exam number
-  Future<Accreditation> validateNumber() async {
+  Future<NewValidator> validateNumber() async {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -479,224 +441,192 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     String? token = prefs.getString('pass');
-    var newEndpoint = Uri.parse(
-        '$BASE_URL/Accreditation/get-accreditation-serialno?serialNo=$examNo');
-
+    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$examNo');
     print(examNo);
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(newEndpoint, headers: headers);
+    final response = await http.get(endpoint, headers: headers);
     Navigator.pop(context);
     switch (response.statusCode) {
       case 200:
-        var mybody = Accreditation.fromJson(jsonDecode(response.body));
+        var mybody = NewValidator.fromJson(jsonDecode(response.body));
         print(response.statusCode);
         print("I am here");
 
         Get.defaultDialog(
             title: "",
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.75,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Column(
-                children: [
-                  Expanded(
+            content: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                              color: Colors.grey,
-                              width: 0.5,
-                              style: BorderStyle.solid),
-                          color: Colors.white),
-                      height: MediaQuery.of(context).size.height * 0.65,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                          border: Border.all(color: Colors.black),
+                          color: Colors.black12),
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage:
-                                      AssetImage('images/flogo.png'),
-                                ),
-                                Text(
-                                  "Promotional Exam\nAccreditation Tag 2021",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.green),
-                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5, left: 5),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage('images/logo.png'),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12.0, right: 12.0, bottom: 12.0),
+                                    child: Text(
+                                      "Exam ID Card",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ))
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: CircleAvatar(
-                                      radius: 70,
-                                      backgroundColor: Colors.transparent,
-                                      backgroundImage: NetworkImage(
-                                          mybody.response.passportUrl),
-                                    ))
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.12,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Text(
-                                    mybody.response.firstName +
-                                        " " +
-                                        mybody.response.lastName,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, right: 5.0),
-                                  child: Text(
-                                    "Exam No:",
-                                    style: GoogleFonts.lato(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  mybody.response.examNo,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.18,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            mybody.response.qrCodeUrl),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.15,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            mybody.response.signatureUrl),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
+                                CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(mybody.objectValue.picture),
                                 )
                               ],
                             ),
                             Expanded(
-                              flex: 4,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border:
+                                        Border.all(color: Colors.transparent),
+                                    color: Colors.white),
+                                height: MediaQuery.of(context).size.height / 2,
+                                width: 370,
+                                child: Column(children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 25.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8.0),
                                     child: Text(
-                                      mybody.response.serialNo,
+                                      mybody.objectValue.firstName +
+                                          " " +
+                                          mybody.objectValue.lastName,
                                       style: GoogleFonts.lato(
-                                        fontSize: 12,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.height *
-                                        0.01,
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 5.0),
+                                        child: Text(
+                                          "Exam No:",
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        mybody.objectValue.examNo,
+                                        style: GoogleFonts.lato(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text("Signature",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.height *
-                                        0.01,
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 150,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                mybody.objectValue.qrCodeUrl),
+                                          ),
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ],
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.09,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.20,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                image: NetworkImage(mybody
+                                                    .objectValue.signature),
+                                              ))),
+                                        ),
+                                      ]),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 12.0),
+                                        child: Text("signature",
+                                            style: GoogleFonts.lato(
+                                              fontSize: 12,
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
                               ),
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: Text("Only Valid for 1 Exam",
-                                        style: GoogleFonts.lato(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                  ),
-                                  Expanded(
-                                    flex: 4,
-                                    child: Text(
-                                      "© iXam Portal",
-                                      style: GoogleFonts.mulish(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  )
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Only Valid For 1 Exam",
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             )
                           ]),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ));
         return mybody;
 
