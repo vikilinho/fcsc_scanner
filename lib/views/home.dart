@@ -1,5 +1,6 @@
 import 'package:fcsc_admin/controller/login_controller.dart';
 import 'package:fcsc_admin/models/login.dart';
+import 'package:fcsc_admin/views/new_validationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -160,12 +161,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(20),
                                   ))),
                               onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  Login customerDetails = Login(
-                                      _email_address.text, _password.text);
+                                // if (_formKey.currentState!.validate()) {
+                                //   Login customerDetails = Login(
+                                //       _email_address.text, _password.text);
 
-                                  model.login(customerDetails);
-                                }
+                                //   model.login(customerDetails);
+                                // }
+                                Get.to(NewValidationScreen());
                               },
                               child: Row(
                                 mainAxisAlignment:

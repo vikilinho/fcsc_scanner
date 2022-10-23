@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fcsc_admin/component/constants.dart';
+import 'package:fcsc_admin/component/ixam_card.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
 import 'package:fcsc_admin/views/home.dart';
@@ -39,7 +40,8 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
         setState(() {
           newValue = value;
           if (newValue != "-1") {
-            scanCard();
+            // scanCard();
+            Get.to(IxamCard());
           }
         });
       });
@@ -171,7 +173,8 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ))),
                     onPressed: () async {
-                      validateNumber();
+                      // validateNumber();
+                      Get.to(IxamCard());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

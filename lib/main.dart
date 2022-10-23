@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         '/NewValidationScreen': (context) => NewValidationScreen(),
         '/Usercard': (context) => UserCard(),
       },
-      initialRoute: '/SplashScreen',
+      initialRoute: '/Usercard',
     );
   }
 }

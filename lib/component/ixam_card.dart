@@ -173,7 +173,9 @@ class IxamCard extends StatelessWidget {
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                   ),
-                )
+                ),
+                ElevatedButton(
+                    onPressed: () {}, child: Text("Validate Candidate"))
               ]),
             ),
           ),
