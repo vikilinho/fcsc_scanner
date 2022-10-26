@@ -1,7 +1,9 @@
 import 'package:fcsc_admin/controller/login_controller.dart';
 import 'package:fcsc_admin/models/login.dart';
+import 'package:fcsc_admin/views/admin_page.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
@@ -40,22 +42,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                         child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 85,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage('images/1024.png'),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
+                        Image.asset("images/Testmi.png"),
+                        SizedBox(height: 60.74.h),
+                        Text("Welcome Back!",
+                            style: TextStyle(
+                                fontFamily: "MuseoSans_500.otf",
+                                fontSize: 28.sp,
+                                color: Color(0xff024126),
+                                fontWeight: FontWeight.w700)),
+                        SizedBox(height: 12.h),
+
+                        Text("Enter your login details below to continue",
+                            style: TextStyle(
+                                fontSize: 14.sp, fontWeight: FontWeight.w400)),
+                        SizedBox(height: 46.h),
 
                         Form(
                             key: _formKey,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text("Email"),
+                                SizedBox(height: 2.h),
                                 Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.85,
-                                    height: 70,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.12,
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: TextFormField(
@@ -69,36 +82,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: InputDecoration(
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none,
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: CircleAvatar(
-                                                  backgroundColor: Colors.green,
-                                                  child: Icon(
-                                                    Icons.person,
-                                                    color: Colors.white,
-                                                  )),
-                                            ),
-                                            hintText: "Email Address",
+                                            hintText:
+                                                "Eg: abdulolayinka@gmail.com",
                                             hintStyle: GoogleFonts.lato(
                                               fontSize: 14,
                                             ),
                                           )),
                                     ),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.black12,
-                                      ),
-                                    )),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                          color: Colors.black12,
+                                        ),
+                                        color: Color.fromARGB(
+                                            003, 017, 011, 007))),
+                                SizedBox(height: 16.h),
+                                Text("Password"),
+                                SizedBox(height: 2.h),
                                 Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.85,
-                                    height: 70,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.12,
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: TextFormField(
@@ -113,20 +118,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: InputDecoration(
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none,
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.security_outlined,
-                                                color: Colors.green,
-                                              ),
-                                            ),
                                             suffixIcon: IconButton(
                                               icon: Icon(
                                                 model.isPasswordVisible.value
                                                     ? Icons.visibility_off
                                                     : Icons.visibility,
-                                                color: Colors.green,
+                                                color: Color(0xff219653),
                                               ),
                                               onPressed: () => model
                                                   .togglePasswordVisibility(),
@@ -138,27 +135,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )),
                                     ),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.black12,
-                                      ),
-                                    )),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                          color: Colors.black12,
+                                        ),
+                                        color: Color.fromARGB(
+                                            003, 017, 011, 007))),
                               ],
                             )),
                         SizedBox(
-                          height: 20,
+                          height: 64.h,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          height: 70,
+                          width: 300.w,
+                          height: 40.h,
                           child: ElevatedButton(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.green),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xff219653)),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ))),
                               onPressed: () async {
                                 // if (_formKey.currentState!.validate()) {
@@ -167,17 +165,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 //   model.login(customerDetails);
                                 // }
-                                Get.to(NewValidationScreen());
+                                Get.to(() => AdminPage());
                               },
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Sign In',
-                                      style: TextStyle(color: Colors.white)),
-                                  Icon(Icons.arrow_forward, color: Colors.white)
-                                ],
-                              )),
+                              child: Text('Sign In',
+                                  style: TextStyle(color: Colors.white))),
                         ),
                         // Padding(
                         //   padding: const EdgeInsets.all(15.0),
