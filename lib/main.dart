@@ -1,4 +1,4 @@
-import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/splash.dart';
 import 'package:fcsc_admin/views/user_card.dart';
 

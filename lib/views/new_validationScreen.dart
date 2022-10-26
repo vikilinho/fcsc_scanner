@@ -4,7 +4,7 @@ import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/component/ixam_card.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
-import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/models/validator.dart';
 import 'package:fcsc_admin/views/user_card.dart';
 

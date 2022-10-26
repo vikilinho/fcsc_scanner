@@ -1,6 +1,6 @@
 import 'package:fcsc_admin/controller/login_controller.dart';
 import 'package:fcsc_admin/models/login.dart';
-import 'package:fcsc_admin/views/admin_page.dart';
+import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

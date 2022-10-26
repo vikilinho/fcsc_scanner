@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fcsc_admin/views/home.dart';
+import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 import 'package:fcsc_admin/views/validation_screen.dart';
 import 'package:flutter/material.dart';
