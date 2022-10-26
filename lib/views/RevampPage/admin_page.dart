@@ -1,3 +1,4 @@
+import 'package:fcsc_admin/views/RevampPage/userPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -207,7 +208,7 @@ class _AdminPageState extends State<AdminPage> {
 
                               //   model.login(customerDetails);
                               // }
-                              Get.to(() => AdminPage());
+                              Get.to(() => UserPage());
                             },
                             child: Text('Validate',
                                 style: TextStyle(color: Colors.white))),
@@ -232,7 +233,7 @@ class _AdminPageState extends State<AdminPage> {
 
                               //   model.login(customerDetails);
                               // }
-                              Get.to(() => AdminPage());
+                              Get.to(() => UserPage());
                             },
                             child: Text('Log Out',
                                 style: TextStyle(color: Color(0xffD90A0A)))),
