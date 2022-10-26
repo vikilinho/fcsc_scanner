@@ -1,8 +1,10 @@
+import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/RevampPage/userPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminPage extends StatefulWidget {
   AdminPage({Key? key}) : super(key: key);
@@ -227,13 +229,10 @@ class _AdminPageState extends State<AdminPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ))),
                             onPressed: () async {
-                              // if (_formKey.currentState!.validate()) {
-                              //   Login customerDetails = Login(
-                              //       _email_address.text, _password.text);
-
-                              //   model.login(customerDetails);
-                              // }
-                              Get.to(() => UserPage());
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.remove('pass');
+                              Get.to(() => HomeScreen());
                             },
                             child: Text('Log Out',
                                 style: TextStyle(color: Color(0xffD90A0A)))),
