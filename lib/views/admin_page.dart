@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdminPage extends StatefulWidget {
   AdminPage({Key? key}) : super(key: key);
@@ -14,8 +15,33 @@ class _AdminPageState extends State<AdminPage> {
       body: SafeArea(
           child: Column(
         children: [
-          ListTile(
-            title: Container(),
+          Row(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 10.h,
+                    width: 10.w,
+                    decoration: BoxDecoration(color: Colors.red),
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hello Admin",
+                    style: TextStyle(fontSize: 14.sp),
+                  ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Text("Welcome Back",
+                      style:
+                          TextStyle(fontSize: 20.sp, color: Color(0xff024126)))
+                ],
+              )
+            ],
           )
         ],
       )),
