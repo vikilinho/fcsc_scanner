@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -45,6 +48,7 @@ class _UserPageState extends State<UserPage> {
                       ),
                       child: Image.asset(
                         "images/user_image.png",
+                        height: 100.h,
                       ),
                     ),
                     SizedBox(height: 5.h),
@@ -68,12 +72,11 @@ class _UserPageState extends State<UserPage> {
             ),
             SizedBox(height: 32.h),
             Container(
-              height: 100.h,
+              height: 90.h,
               width: 358.w,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 238, 235, 235),
                   ),
                   color: Colors.white),
               child: Row(children: [
@@ -101,7 +104,123 @@ class _UserPageState extends State<UserPage> {
                   ],
                 )
               ]),
-            )
+            ),
+            SizedBox(height: 8.h),
+            Container(
+              height: 50.h,
+              width: 358.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Color.fromARGB(255, 238, 235, 235),
+                  ),
+                  color: Colors.white),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Exam Number",
+                            style: TextStyle(color: Color(0xff79807C)),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5.h),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "NERC-05-2021-K46GD-HB612JE9HB",
+                            style: TextStyle(
+                                color: Color(0xff219653),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                    )
+                  ]),
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Container(
+                  height: 140.h,
+                  width: 140.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      border: Border.all(
+                        color: Color.fromARGB(255, 238, 235, 235),
+                      ),
+                      color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("images/qr_image.png"),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text("Barcode")
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 40.w,
+                ),
+                Container(
+                  height: 140.h,
+                  width: 140.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      border: Border.all(
+                        color: Color.fromARGB(255, 238, 235, 235),
+                      ),
+                      color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("images/sig.png"),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text("Signature")
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Container(
+              width: 300.w,
+              height: 40.h,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xff219653)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ))),
+                  onPressed: () async {
+                    // if (_formKey.currentState!.validate()) {
+                    //   Login customerDetails = Login(
+                    //       _email_address.text, _password.text);
+
+                    //   model.login(customerDetails);
+                    // }
+                    Get.to(() => UserPage());
+                  },
+                  child: Text('Admit Candidate',
+                      style: TextStyle(color: Colors.white))),
+            ),
           ],
         ),
       )),
