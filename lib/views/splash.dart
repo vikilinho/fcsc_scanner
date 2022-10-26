@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // loadData();
     getMyTk().whenComplete(() async {
       Timer(
-          Duration(milliseconds: 0),
+          Duration(milliseconds: 2000),
           () =>
               Get.to(finalPass == null ? HomeScreen() : NewValidationScreen()));
     });
@@ -40,7 +40,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Color.fromRGBO(28, 180, 174, 1),
-        );
+      backgroundColor: Colors.white,
+      body: SafeArea(
+          child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("images/Testmi.png"),
+          ],
+        ),
+      )),
+    );
   }
 }
