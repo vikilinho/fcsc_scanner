@@ -84,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             enabledBorder: InputBorder.none,
                                             hintText:
                                                 "Eg: abdulolayinka@gmail.com",
+                                            alignLabelWithHint: true,
                                             hintStyle: GoogleFonts.lato(
                                               fontSize: 14,
                                             ),
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: MediaQuery.of(context).size.width *
                                         0.12,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
+                                      padding: const EdgeInsets.only(left: 8.0),
                                       child: TextFormField(
                                           enableSuggestions: false,
                                           obscureText:

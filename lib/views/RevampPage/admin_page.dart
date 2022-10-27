@@ -1,6 +1,9 @@
 import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/RevampPage/userPage.dart';
+import 'package:fcsc_admin/views/user_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +18,32 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   TextEditingController _examNumber = TextEditingController();
+  String? controlNumber = "";
+  String newValue = "";
+  Future<void> scanQRCode() async {
+    // String controlNumber;
+    try {
+      controlNumber = await FlutterBarcodeScanner.scanBarcode(
+        '#ff38AA5F',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      ).then((value) {
+        setState(() {
+          newValue = value;
+          // if (newValue != "-1") {
+          //   // scanCard();
+          //   Get.to(UserCard());
+          // }
+          Get.to(UserPage());
+        });
+      });
+    } on PlatformException {
+      controlNumber = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -67,12 +96,22 @@ class _AdminPageState extends State<AdminPage> {
                               color: Color(0xff024126),
                               fontWeight: FontWeight.w700))
                     ],
-                  )
+                  ),
+                  // Column(
+                  //   children: [
+                  //     IconButton(
+                  //         onPressed: () {},
+                  //         icon: Icon(
+                  //           Icons.logout_rounded,
+                  //           color: Colors.red,
+                  //         )),
+                  //   ],
+                  // )
                 ],
               ),
               SizedBox(height: 42.h),
               GestureDetector(
-                // onTap: () => ,
+                onTap: () => scanQRCode(),
                 child: Container(
                   height: 160.h,
                   width: 358.w,
