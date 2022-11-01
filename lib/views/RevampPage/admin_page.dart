@@ -1,13 +1,16 @@
 import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/RevampPage/userPage.dart';
-import 'package:fcsc_admin/views/user_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+final String logOut = 'images/log_out.svg';
 
 class AdminPage extends StatefulWidget {
   AdminPage({Key? key}) : super(key: key);
@@ -18,6 +21,12 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   TextEditingController _examNumber = TextEditingController();
+  final Widget logOutIcon = SvgPicture.asset(
+    logOut,
+    semanticsLabel: 'call Icon ',
+    height: 10.83.h,
+    width: 10.87.h,
+  );
   String? controlNumber = "";
   String newValue = "";
   Future<void> scanQRCode() async {
@@ -254,28 +263,60 @@ class _AdminPageState extends State<AdminPage> {
                             child: Text('Validate',
                                 style: TextStyle(color: Colors.white))),
                       ),
-                      SizedBox(height: 35.h),
-                      Container(
-                        width: 300.w,
-                        height: 40.h,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Color(0xffFFE5E5)),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ))),
-                            onPressed: () async {
-                              final SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.remove('pass');
-                              Get.to(() => HomeScreen());
-                            },
-                            child: Text('Log Out',
-                                style: TextStyle(color: Color(0xffD90A0A)))),
+                      SizedBox(height: 80.h),
+                      GestureDetector(
+                        onTap: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.remove('pass');
+                          Get.to(() => HomeScreen());
+                        },
+                        child: Container(
+                          width: 300.w,
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                              color: Color(0xffFFE5E5),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                logOutIcon,
+                                SizedBox(
+                                  width: 12.08.w,
+                                ),
+                                Text(
+                                  "Log Out",
+                                  style: TextStyle(
+                                      color: Color(0xffD90A0A),
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
+                      // Container(
+                      //   width: 300.w,
+                      //   height: 40.h,
+                      //   child: ElevatedButton(
+                      //       style: ButtonStyle(
+                      //           backgroundColor: MaterialStateProperty.all(
+                      //               Color(0xffFFE5E5)),
+                      //           shape: MaterialStateProperty.all<
+                      //                   RoundedRectangleBorder>(
+                      //               RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //           ))),
+                      //       onPressed: () async {
+                      //         final SharedPreferences prefs =
+                      //             await SharedPreferences.getInstance();
+                      //         await prefs.remove('pass');
+                      //         Get.to(() => HomeScreen());
+                      //       },
+                      //       child: Text('Log Out',
+                      //           style: TextStyle(color: Color(0xffD90A0A)))),
+                      // ),
                     ],
                   ))
             ],
