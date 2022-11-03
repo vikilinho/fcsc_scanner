@@ -26,8 +26,8 @@ class UserDataModel {
 
 class ObjectValue {
   int? candidateId;
+  int? serveQuizId;
   String? qrCode;
-
   String? firstName;
   String? lastName;
   String? candidatePhoto;
@@ -41,12 +41,13 @@ class ObjectValue {
       this.lastName,
       this.candidatePhoto,
       this.controlNo,
-      this.examNo});
+      this.examNo,
+      this.serveQuizId});
 
   ObjectValue.fromJson(Map<String, dynamic> json) {
-    candidateId = json['candidateId'] ?? "";
+    candidateId = json['candidateId'] ?? 190;
     qrCode = json['qrCode'] ?? "";
-
+    serveQuizId = json['serveQuizId'] ?? 69;
     firstName = json['firstName'] ?? "";
     lastName = json['lastName'] ?? "";
     candidatePhoto = json['candidatePhoto'] ?? "";
@@ -58,7 +59,7 @@ class ObjectValue {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['candidateId'] = this.candidateId;
     data['qrCode'] = this.qrCode;
-
+    data['serveQuizId'] = this.serveQuizId;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
     data['candidatePhoto'] = this.candidatePhoto;

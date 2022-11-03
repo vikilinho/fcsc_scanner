@@ -1,5 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:fcsc_admin/component/constants.dart';
+import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPage extends StatefulWidget {
   final String firstName;
@@ -9,6 +17,7 @@ class UserPage extends StatefulWidget {
   final String examNumber;
   final String qrCode;
   final int candidateId;
+  final int serveQuizId;
 
   const UserPage(
       {Key? key,
@@ -18,7 +27,8 @@ class UserPage extends StatefulWidget {
       required this.controlNo,
       required this.examNumber,
       required this.qrCode,
-      required this.candidateId})
+      required this.candidateId,
+      required this.serveQuizId})
       : super(key: key);
 
   @override
@@ -26,6 +36,43 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  Future admitCandidate({
+    required Map email,
+  }) async {
+    try {
+      var body = json.encode(email);
+
+      // print("body ==> $body");
+      var url = BASE_URL + "/Quiz/Candidate/Attendance ";
+      final prefs = await SharedPreferences.getInstance();
+
+      String? token = prefs.getString('pass');
+
+      var response = await http.post(Uri.parse(url), body: body, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': "gzip, deflate, br",
+        'Authorization': 'Bearer $token'
+      });
+
+      var decode = json.decode(response.body);
+
+      var message = decode['message'];
+
+      if (response.statusCode == 200) {
+        Get.snackbar("Success", message,
+            colorText: Colors.white, backgroundColor: Colors.green);
+
+        Get.to(AdminPage());
+      } else {
+        Get.snackbar("Error", message,
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+    } catch (e) {
+      print('exception ====>>> $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,7 +221,7 @@ class _UserPageState extends State<UserPage> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        Text("Barcode")
+                        Text("barcode") //barcode
                       ],
                     ),
                   ),
@@ -196,13 +243,20 @@ class _UserPageState extends State<UserPage> {
                           borderRadius: BorderRadius.circular(10),
                         ))),
                     onPressed: () async {
-                      // if (_formKey.currentState!.validate()) {
-                      //   Login customerDetails = Login(
-                      //       _email_address.text, _password.text);
+                      //call admit endpoint
+                      DateTime now = new DateTime.now();
+                      DateTime date =
+                          new DateTime(now.year, now.month, now.day);
+                      String scheduleDate = date.toUtc().toIso8601String();
+                      var candidateDetails = {
+                        "serveQuizId": 0,
+                        "location": "string",
+                        "scheduleDate": scheduleDate,
+                        "candidateId": 0
+                      };
+                      log("how are you doing this");
 
-                      //   model.login(customerDetails);
-                      // }
-                      // Get.to(() => UserPage());
+                      print(now.toString());
                     },
                     child: Text('Admit Candidate',
                         style: TextStyle(color: Colors.white))),

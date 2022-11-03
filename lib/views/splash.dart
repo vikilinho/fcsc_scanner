@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:fcsc_admin/views/RevampPage/home.dart';
@@ -30,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future getMyTk() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var tokenObtained = prefs.getString('pass');
-    print(tokenObtained);
+    // print(tokenObtained);
+
     setState(() {
       finalPass = tokenObtained;
     });
