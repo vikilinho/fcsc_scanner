@@ -60,14 +60,6 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                       ),
-
-                      // ClipOval(
-                      //   child: Image.network(
-                      //     "https://t4.ftcdn.net/jpg/03/03/62/45/360_F_303624505_u0bFT1Rnoj8CMUSs8wMCwoKlnWlh5Jiq.jpg",
-                      //     height: 100.h,
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
                       SizedBox(height: 5.h),
                       Text(
                         widget.firstName + " " + widget.lastName,

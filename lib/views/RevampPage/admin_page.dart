@@ -128,18 +128,18 @@ class _AdminPageState extends State<AdminPage> {
     switch (response.statusCode) {
       case 200:
         var mybody = UserDataModel.fromJson(jsonDecode(response.body));
-        log("firstname from server is " +
-            mybody.objectValue!.firstName.toString());
+        log("candidate id from server is " +
+            mybody.objectValue!.candidateId.toString());
 
         print(response.statusCode);
-        Get.to(UserPage(
-          firstName: mybody.objectValue!.firstName.toString(),
-          lastName: mybody.objectValue!.lastName.toString(),
-          photoUrl: mybody.objectValue!.candidatePhoto.toString(),
-          examNumber: mybody.objectValue!.examNo.toString(),
-          qrCode: mybody.objectValue!.qrCode.toString(),
-          controlNo: mybody.objectValue!.controlNo.toString(),
-        ));
+        Get.to(() => UserPage(
+              firstName: mybody.objectValue!.firstName.toString(),
+              lastName: mybody.objectValue!.lastName.toString(),
+              photoUrl: mybody.objectValue!.candidatePhoto.toString(),
+              examNumber: mybody.objectValue!.examNo.toString(),
+              qrCode: mybody.objectValue!.qrCode.toString(),
+              controlNo: mybody.objectValue!.controlNo.toString(),
+            ));
         return mybody;
       case 400:
         Get.snackbar("Error!", response.body.toString(),

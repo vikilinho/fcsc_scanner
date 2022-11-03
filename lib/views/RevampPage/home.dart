@@ -1,7 +1,6 @@
 import 'package:fcsc_admin/controller/login_controller.dart';
 import 'package:fcsc_admin/models/login.dart';
-import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
-import 'package:fcsc_admin/views/new_validationScreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -51,12 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xff024126),
                                 fontWeight: FontWeight.w700)),
                         SizedBox(height: 12.h),
-
                         Text("Enter your login details below to continue",
                             style: TextStyle(
                                 fontSize: 14.sp, fontWeight: FontWeight.w400)),
                         SizedBox(height: 46.h),
-
                         Form(
                             key: _formKey,
                             child: Column(
@@ -166,20 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   model.login(customerDetails);
                                 }
-                                // Get.to(() => AdminPage());
                               },
                               child: Text('Sign In',
                                   style: TextStyle(color: Colors.white))),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(15.0),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.end,
-                        //     children: [
-                        //       Text("Forgot password"),
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     )),
                   )),
