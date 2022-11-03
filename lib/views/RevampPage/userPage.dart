@@ -36,40 +36,47 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  bool isLoading = false;
   Future admitCandidate({
-    required Map email,
+    required Map candidateDetails,
   }) async {
-    try {
-      var body = json.encode(email);
+    var body = json.encode(candidateDetails);
+    isLoading = true;
+    setState(() {});
+    log("request body ==> $body");
+    var url =
+        "https://testminerc.azurewebsites.net/api/Quiz/Candidate/Attendance";
 
-      // print("body ==> $body");
-      var url = BASE_URL + "/Quiz/Candidate/Attendance ";
-      final prefs = await SharedPreferences.getInstance();
+    log(url);
 
-      String? token = prefs.getString('pass');
+    final prefs = await SharedPreferences.getInstance();
 
-      var response = await http.post(Uri.parse(url), body: body, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Encoding': "gzip, deflate, br",
-        'Authorization': 'Bearer $token'
-      });
+    String? token = prefs.getString('pass');
 
-      var decode = json.decode(response.body);
+    var response = await http.post(Uri.parse(url), body: body, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Encoding': "gzip, deflate, br",
+      'Authorization': 'Bearer $token'
+    });
+    isLoading = false;
+    setState(() {});
+    var decode = jsonDecode(response.body);
 
-      var message = decode['message'];
+    log(decode.toString());
 
-      if (response.statusCode == 200) {
-        Get.snackbar("Success", message,
-            colorText: Colors.white, backgroundColor: Colors.green);
+    var message = decode['statusMessage'];
+    log(response.statusCode.toString());
+    log(message.toString());
 
-        Get.to(AdminPage());
-      } else {
-        Get.snackbar("Error", message,
-            colorText: Colors.white, backgroundColor: Colors.red);
-      }
-    } catch (e) {
-      print('exception ====>>> $e');
+    if (response.statusCode == 200) {
+      Get.snackbar("Success", message,
+          colorText: Colors.white, backgroundColor: Colors.green);
+
+      Get.to(AdminPage());
+    } else {
+      Get.snackbar("Error", message,
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
@@ -104,9 +111,7 @@ class _UserPageState extends State<UserPage> {
                         radius: 68,
                         child: CircleAvatar(
                           radius: 65,
-                          backgroundImage: NetworkImage(
-                            "https://t4.ftcdn.net/jpg/03/03/62/45/360_F_303624505_u0bFT1Rnoj8CMUSs8wMCwoKlnWlh5Jiq.jpg",
-                          ),
+                          backgroundImage: NetworkImage(widget.photoUrl),
                         ),
                       ),
                       SizedBox(height: 5.h),
@@ -215,7 +220,7 @@ class _UserPageState extends State<UserPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.network(
-                          "https://testminerc.azurewebsites.net/Uploads/70373a07-cf24-4311-bdd4-1151e870a005.png",
+                          widget.qrCode,
                           height: 150,
                         ), //widget.qrCode
                         SizedBox(
@@ -230,37 +235,46 @@ class _UserPageState extends State<UserPage> {
               SizedBox(
                 height: 30.h,
               ),
-              Container(
-                width: 300.w,
-                height: 40.h,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Color(0xff219653)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ))),
-                    onPressed: () async {
-                      //call admit endpoint
-                      DateTime now = new DateTime.now();
-                      DateTime date =
-                          new DateTime(now.year, now.month, now.day);
-                      String scheduleDate = date.toUtc().toIso8601String();
-                      var candidateDetails = {
-                        "serveQuizId": 0,
-                        "location": "string",
-                        "scheduleDate": scheduleDate,
-                        "candidateId": 0
-                      };
-                      log("how are you doing this");
+              isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      width: 300.w,
+                      height: 40.h,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color(0xff219653)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ))),
+                          onPressed: () async {
+                            //call admit endpoint
+                            DateTime now = new DateTime.now();
+                            DateTime date =
+                                new DateTime(now.year, now.month, now.day);
+                            String scheduleDate =
+                                date.toUtc().toIso8601String();
+                            final prefs = await SharedPreferences.getInstance();
 
-                      print(now.toString());
-                    },
-                    child: Text('Admit Candidate',
-                        style: TextStyle(color: Colors.white))),
-              ),
+                            prefs.getString("selectedLocation");
+
+                            var candidateDetails = {
+                              // "id": 0,
+                              "serveQuizId": widget.serveQuizId,
+                              "location": prefs
+                                  .getString("selectedLocation")
+                                  .toString(),
+                              "scheduleDate": scheduleDate,
+                              "candidateId": widget.candidateId
+                            };
+                            admitCandidate(candidateDetails: candidateDetails);
+                            log(prefs.getString("selectedLocation").toString());
+                          },
+                          child: Text('Admit Candidate',
+                              style: TextStyle(color: Colors.white))),
+                    ),
             ],
           ),
         ),

@@ -146,7 +146,7 @@ class _AdminPageState extends State<AdminPage> {
             ));
         return mybody;
       case 400:
-        Get.snackbar("Error!", response.body.toString(),
+        Get.snackbar(response.statusCode.toString(), "User not found",
             colorText: Colors.white, backgroundColor: Colors.pinkAccent);
         break;
       case 401:
