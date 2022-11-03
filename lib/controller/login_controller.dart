@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:fcsc_admin/locator.dart';
 import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/services/user_service.dart';
+import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 
 import 'package:flutter/material.dart';
@@ -19,18 +23,21 @@ class LoginController extends GetxController {
     isLoading.value = false;
     switch (response.statusCode) {
       case 200:
-        var message = response.body['message'];
-        // print(resp);
-        print(message);
-        var token = response.body['response']['token'];
-        print(token);
+        // var body = json.decode(response.body.toString());
+        // var token = body['objectValue']['token'];
+        Map<String, dynamic> map = response.body;
 
+        var token = map['objectValue']['token'];
+        log(token.toString());
+
+        // print(resp);
+        // log(token);
         prefs.setString('pass', token);
-        Get.snackbar("Login Successfull", "",
-            duration: Duration(seconds: 5),
-            colorText: Colors.white,
-            backgroundColor: Colors.green);
-        Get.to(NewValidationScreen());
+        // Get.snackbar("Login Successfull", "",
+        //     duration: Duration(seconds: 5),
+        //     colorText: Colors.white,
+        //     backgroundColor: Colors.green);
+        Get.to(() => AdminPage());
         break;
       case 400:
         print(response.statusCode);

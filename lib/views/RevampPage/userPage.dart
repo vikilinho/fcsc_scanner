@@ -1,11 +1,23 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({Key? key}) : super(key: key);
+  final String firstName;
+  final String lastName;
+  final String photoUrl;
+  final String controlNo;
+  final String examNumber;
+  final String qrCode;
+
+  const UserPage(
+      {Key? key,
+      required this.firstName,
+      required this.lastName,
+      required this.photoUrl,
+      required this.controlNo,
+      required this.examNumber,
+      required this.qrCode})
+      : super(key: key);
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -38,43 +50,32 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   Column(
                     children: [
-                      // Container(
-                      //   height: 100.h,
-                      //   width: 100.w,
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(20),
-                      //     border: Border.all(
-                      //       color: Color.fromARGB(255, 238, 235, 235),
-                      //     ),
-                      //   ),
-                      //   child: Image.asset(
-                      //     "images/user_image.png",
+                      CircleAvatar(
+                        backgroundColor: Colors.black,
+                        radius: 68,
+                        child: CircleAvatar(
+                          radius: 65,
+                          backgroundImage: NetworkImage(
+                            "https://t4.ftcdn.net/jpg/03/03/62/45/360_F_303624505_u0bFT1Rnoj8CMUSs8wMCwoKlnWlh5Jiq.jpg",
+                          ),
+                        ),
+                      ),
+
+                      // ClipOval(
+                      //   child: Image.network(
+                      //     "https://t4.ftcdn.net/jpg/03/03/62/45/360_F_303624505_u0bFT1Rnoj8CMUSs8wMCwoKlnWlh5Jiq.jpg",
                       //     height: 100.h,
                       //     fit: BoxFit.contain,
                       //   ),
                       // ),
-                      ClipOval(
-                        child: Image.asset(
-                          "images/user_image.png",
-                          height: 100.h,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Oladimeji David",
+                        widget.firstName + " " + widget.lastName,
                         style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
                             color: Color(0xff024126)),
                       ),
-                      Text(
-                        "oladimejidavid@gmail.com",
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff79807C)),
-                      )
                     ],
                   ),
                 ],
@@ -145,7 +146,7 @@ class _UserPageState extends State<UserPage> {
                         child: Column(
                           children: [
                             Text(
-                              "NERC-05-2021-K46GD-HB612JE9HB",
+                              widget.examNumber,
                               style: TextStyle(
                                   color: Color(0xff219653),
                                   fontSize: 12.sp,
@@ -158,10 +159,11 @@ class _UserPageState extends State<UserPage> {
               ),
               SizedBox(height: 8.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 140.h,
-                    width: 140.w,
+                    width: 160.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(0),
                         border: Border.all(
@@ -171,34 +173,14 @@ class _UserPageState extends State<UserPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("images/qr_image.png"),
+                        Image.network(
+                          "https://testminerc.azurewebsites.net/Uploads/70373a07-cf24-4311-bdd4-1151e870a005.png",
+                          height: 150,
+                        ), //widget.qrCode
                         SizedBox(
-                          height: 5.h,
+                          height: 8.h,
                         ),
                         Text("Barcode")
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 40.w,
-                  ),
-                  Container(
-                    height: 140.h,
-                    width: 140.w,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(0),
-                        border: Border.all(
-                          color: Color.fromARGB(255, 238, 235, 235),
-                        ),
-                        color: Colors.white),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("images/sig.png"),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Text("Signature")
                       ],
                     ),
                   ),
@@ -226,7 +208,7 @@ class _UserPageState extends State<UserPage> {
 
                       //   model.login(customerDetails);
                       // }
-                      Get.to(() => UserPage());
+                      // Get.to(() => UserPage());
                     },
                     child: Text('Admit Candidate',
                         style: TextStyle(color: Colors.white))),

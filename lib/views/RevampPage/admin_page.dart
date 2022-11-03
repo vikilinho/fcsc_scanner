@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:fcsc_admin/component/constants.dart';
+import 'package:fcsc_admin/component/progressbar.dart';
+import 'package:fcsc_admin/models/userData.dart';
 import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/RevampPage/userPage.dart';
 
@@ -9,8 +15,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 final String logOut = 'images/log_out.svg';
+final String scan = 'images/scan-bar.svg';
+final String arrow = 'images/arrow-right.svg';
+final String shape = 'images/Shape.svg';
 
 class AdminPage extends StatefulWidget {
   AdminPage({Key? key}) : super(key: key);
@@ -21,14 +31,134 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   TextEditingController _examNumber = TextEditingController();
+  var examNo;
   final Widget logOutIcon = SvgPicture.asset(
     logOut,
     semanticsLabel: 'call Icon ',
     height: 10.83.h,
-    width: 10.87.h,
+    width: 10.87.w,
+  );
+
+  final Widget scanBar = SvgPicture.asset(
+    scan,
+    semanticsLabel: 'call Icon ',
+    height: 24.83.h,
+    width: 24.87.w,
+  );
+  final Widget arrowRight = SvgPicture.asset(
+    arrow,
+    semanticsLabel: 'arrow Icon ',
+    height: 20.33.h,
+    width: 15.9.w,
+  );
+  final Widget shapeIcon = SvgPicture.asset(
+    shape,
+    semanticsLabel: 'arrow Icon ',
+    height: 26.66.h,
+    width: 21.33.w,
   );
   String? controlNumber = "";
   String newValue = "";
+
+  Future<UserDataModel> scanCard() async {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return ProgressBar(
+            message: "Fetching candidate data...",
+          );
+        });
+    final prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString('pass');
+    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$newValue');
+    Map<String, String> headers = {'Authorization': 'Bearer $token'};
+    final response = await http.get(endpoint, headers: headers);
+    Navigator.pop(context);
+    switch (response.statusCode) {
+      case 200:
+        var mybody = UserDataModel.fromJson(jsonDecode(response.body));
+        print(response.statusCode);
+        Get.to(UserPage(
+          firstName: mybody.objectValue!.firstName.toString(),
+          lastName: mybody.objectValue!.lastName.toString(),
+          photoUrl: mybody.objectValue!.candidatePhoto.toString(),
+          examNumber: mybody.objectValue!.examNo.toString(),
+          qrCode: mybody.objectValue!.qrCode.toString(),
+          controlNo: mybody.objectValue!.controlNo.toString(),
+        ));
+        return mybody;
+      case 400:
+        Get.snackbar("Error!", "Check candidate number",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 401:
+        Get.snackbar("Error", "Unauthorised",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 500:
+        Get.snackbar("Opps!", "Server Error");
+    }
+
+    Get.snackbar("Error", "Candidate not found",
+        colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+    print(response.statusCode);
+    throw Exception('Failed to to get user details');
+  }
+
+  Future<UserDataModel> validateNumber() async {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return ProgressBar(
+            message: "Fetching candidate data...",
+          );
+        });
+    final prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString('pass');
+    var endpoint = Uri.parse('$BASE_URL/Candidates/ControlNo/$examNo');
+    log("The validation endpoint is: " + endpoint.toString());
+
+    Map<String, String> headers = {'Authorization': 'Bearer $token'};
+    final response = await http.get(endpoint, headers: headers);
+    Navigator.pop(context);
+    switch (response.statusCode) {
+      case 200:
+        var mybody = UserDataModel.fromJson(jsonDecode(response.body));
+        log("firstname from server is " +
+            mybody.objectValue!.firstName.toString());
+
+        print(response.statusCode);
+        Get.to(UserPage(
+          firstName: mybody.objectValue!.firstName.toString(),
+          lastName: mybody.objectValue!.lastName.toString(),
+          photoUrl: mybody.objectValue!.candidatePhoto.toString(),
+          examNumber: mybody.objectValue!.examNo.toString(),
+          qrCode: mybody.objectValue!.qrCode.toString(),
+          controlNo: mybody.objectValue!.controlNo.toString(),
+        ));
+        return mybody;
+      case 400:
+        Get.snackbar("Error!", response.body.toString(),
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 401:
+        Get.snackbar("Error", "Unauthorised",
+            colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+        break;
+      case 500:
+        Get.snackbar("Opps!", "Server Error");
+    }
+
+    // Get.snackbar("Error", "Candidate not found",
+    //     colorText: Colors.white, backgroundColor: Colors.pinkAccent);
+    // print(response.statusCode);
+    throw Exception('Failed to to get user details');
+  }
+
   Future<void> scanQRCode() async {
     // String controlNumber;
     try {
@@ -40,11 +170,9 @@ class _AdminPageState extends State<AdminPage> {
       ).then((value) {
         setState(() {
           newValue = value;
-          // if (newValue != "-1") {
-          //   // scanCard();
-          //   Get.to(UserCard());
-          // }
-          Get.to(UserPage());
+          if (newValue != "-1") {
+            scanCard();
+          }
         });
       });
     } on PlatformException {
@@ -73,18 +201,13 @@ class _AdminPageState extends State<AdminPage> {
                   Column(
                     children: [
                       Container(
-                        height: 50.h,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                            color: Color(0xffF0F3F5),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: Icon(
-                          Icons.person,
-                          color: Color(0xff79807C),
-                          size: 50,
-                        ),
-                      )
+                          height: 50.h,
+                          width: 50.w,
+                          decoration: BoxDecoration(
+                              color: Color(0xffF0F3F5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: shapeIcon)
                     ],
                   ),
                   SizedBox(width: 16.w),
@@ -122,7 +245,7 @@ class _AdminPageState extends State<AdminPage> {
               GestureDetector(
                 onTap: () => scanQRCode(),
                 child: Container(
-                  height: 160.h,
+                  height: 170.h,
                   width: 358.w,
                   decoration: BoxDecoration(
                       color: Color(0xffE6F2EC),
@@ -143,9 +266,9 @@ class _AdminPageState extends State<AdminPage> {
                           SizedBox(
                             width: 17.w,
                           ),
-                          Icon(Icons.qr_code),
+                          scanBar,
                           SizedBox(
-                            width: 18.25.w,
+                            width: 8.25.w,
                           ),
                           Text(
                             "Scan Exam Card",
@@ -153,20 +276,16 @@ class _AdminPageState extends State<AdminPage> {
                                 fontSize: 12.sp, fontWeight: FontWeight.w600),
                           ),
                           SizedBox(
-                            width: 139.w,
+                            width: 120.w,
                           ),
                           Container(
-                            width: 25.w,
-                            height: 25.h,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 211, 223, 218),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(
-                              Icons.arrow_forward_rounded,
-                              size: 20,
-                            ),
-                          )
+                              width: 32.w,
+                              height: 32.h,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 211, 223, 218),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(child: arrowRight))
                         ],
                       )
                     ],
@@ -217,6 +336,9 @@ class _AdminPageState extends State<AdminPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: TextFormField(
+                                onChanged: (value) {
+                                  examNo = value.toString().trim();
+                                },
                                 autocorrect: false,
                                 enableSuggestions: false,
                                 validator: (String? number) => number!.isEmpty
@@ -252,13 +374,9 @@ class _AdminPageState extends State<AdminPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ))),
                             onPressed: () async {
-                              // if (_formKey.currentState!.validate()) {
-                              //   Login customerDetails = Login(
-                              //       _email_address.text, _password.text);
-
-                              //   model.login(customerDetails);
-                              // }
-                              Get.to(() => UserPage());
+                              if (_formKey.currentState!.validate()) {
+                                validateNumber();
+                              }
                             },
                             child: Text('Validate',
                                 style: TextStyle(color: Colors.white))),

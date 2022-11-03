@@ -160,13 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(10),
                                   ))),
                               onPressed: () async {
-                                // if (_formKey.currentState!.validate()) {
-                                //   Login customerDetails = Login(
-                                //       _email_address.text, _password.text);
+                                if (_formKey.currentState!.validate()) {
+                                  Login customerDetails = Login(
+                                      _email_address.text, _password.text);
 
-                                //   model.login(customerDetails);
-                                // }
-                                Get.to(() => AdminPage());
+                                  model.login(customerDetails);
+                                }
+                                // Get.to(() => AdminPage());
                               },
                               child: Text('Sign In',
                                   style: TextStyle(color: Colors.white))),

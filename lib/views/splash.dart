@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:fcsc_admin/views/RevampPage/home.dart';
 import 'package:fcsc_admin/views/new_validationScreen.dart';
 import 'package:fcsc_admin/views/validation_screen.dart';
@@ -20,10 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // loadData();
     getMyTk().whenComplete(() async {
-      Timer(
-          Duration(milliseconds: 2000),
-          () =>
-              Get.to(finalPass == null ? HomeScreen() : NewValidationScreen()));
+      Timer(Duration(milliseconds: 2000),
+          () => Get.to(finalPass == null ? HomeScreen() : AdminPage()));
     });
     super.initState();
   }
