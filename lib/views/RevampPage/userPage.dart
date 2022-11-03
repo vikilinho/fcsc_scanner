@@ -111,6 +111,7 @@ class _UserPageState extends State<UserPage> {
                         radius: 68,
                         child: CircleAvatar(
                           radius: 65,
+                          backgroundColor: Colors.transparent,
                           backgroundImage: NetworkImage(widget.photoUrl),
                         ),
                       ),

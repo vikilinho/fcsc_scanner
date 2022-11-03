@@ -161,58 +161,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       )),
                                   SizedBox(height: 2.h),
+                                  SizedBox(
+                                    height: 16.h,
+                                  ),
+                                  Text("Select Location"),
+                                  SizedBox(height: 2.h),
+                                  DropdownSearch<String>(
+                                    popupProps: PopupProps.menu(
+                                      showSelectedItems: true,
+                                      showSearchBox: true,
+                                      disabledItemFn: (String s) =>
+                                          s.startsWith('I'),
+                                    ),
+                                    items: locations,
+                                    dropdownDecoratorProps:
+                                        DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Location",
+                                        hintText: "State",
+                                        filled: true,
+                                        fillColor: Color(0xff12072B1C),
+                                      ),
+                                    ),
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedLocation = value;
+
+                                        log(selectedLocation);
+                                      });
+                                    },
+
+                                    // selectedItem: "Brazil",
+                                  ),
                                 ],
                               ),
                             )),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25.0,
-                            right: 25.0,
-                          ),
-                          child: DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                              showSelectedItems: true,
-                              showSearchBox: true,
-                              disabledItemFn: (String s) => s.startsWith('I'),
-                            ),
-                            items: locations,
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: "Location",
-                                hintText: "State",
-                                filled: true,
-                                fillColor: Color(0xff12072B1C),
-                              ),
-                            ),
-                            onChanged: (String? value) {
-                              setState(() {
-                                selectedLocation = value;
-
-                                log(selectedLocation);
-                              });
-                            },
-
-                            // selectedItem: "Brazil",
-                          ),
-                        ),
-                        selectedLocation == null
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 25.0),
-                                    child: Text(
-                                      "Please select a location",
-                                      style: TextStyle(
-                                          color: Colors.red, fontSize: 9.sp),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
                         SizedBox(
                           height: 64.h,
                         ),
