@@ -81,6 +81,7 @@ class _AdminPageState extends State<AdminPage> {
         var mybody = UserDataModel.fromJson(jsonDecode(response.body));
         print(response.statusCode);
         Get.to(UserPage(
+          candidateId: mybody.objectValue!.candidateId as int,
           firstName: mybody.objectValue!.firstName.toString(),
           lastName: mybody.objectValue!.lastName.toString(),
           photoUrl: mybody.objectValue!.candidatePhoto.toString(),
@@ -133,6 +134,7 @@ class _AdminPageState extends State<AdminPage> {
 
         print(response.statusCode);
         Get.to(() => UserPage(
+              candidateId: mybody.objectValue!.candidateId as int,
               firstName: mybody.objectValue!.firstName.toString(),
               lastName: mybody.objectValue!.lastName.toString(),
               photoUrl: mybody.objectValue!.candidatePhoto.toString(),

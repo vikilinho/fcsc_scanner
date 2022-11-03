@@ -8,6 +8,7 @@ class UserPage extends StatefulWidget {
   final String controlNo;
   final String examNumber;
   final String qrCode;
+  final int candidateId;
 
   const UserPage(
       {Key? key,
@@ -16,7 +17,8 @@ class UserPage extends StatefulWidget {
       required this.photoUrl,
       required this.controlNo,
       required this.examNumber,
-      required this.qrCode})
+      required this.qrCode,
+      required this.candidateId})
       : super(key: key);
 
   @override
