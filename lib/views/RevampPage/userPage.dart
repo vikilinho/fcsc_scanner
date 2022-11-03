@@ -118,7 +118,7 @@ class _UserPageState extends State<UserPage> {
                       Text(
                         widget.firstName + " " + widget.lastName,
                         style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                             color: Color(0xff024126)),
                       ),
@@ -221,10 +221,10 @@ class _UserPageState extends State<UserPage> {
                       children: [
                         Image.network(
                           widget.qrCode,
-                          height: 150,
+                          height: 120.h,
                         ), //widget.qrCode
                         SizedBox(
-                          height: 8.h,
+                          height: 3.h,
                         ),
                         Text("barcode") //barcode
                       ],
