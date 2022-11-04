@@ -38,7 +38,7 @@ class LoginController extends GetxController {
         //     duration: Duration(seconds: 5),
         //     colorText: Colors.white,
         //     backgroundColor: Colors.green);
-        Get.to(() => AdminPage());
+        Get.off(() => AdminPage());
         break;
       case 400:
         print(response.statusCode);

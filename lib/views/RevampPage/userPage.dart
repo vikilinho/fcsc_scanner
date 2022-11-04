@@ -73,7 +73,7 @@ class _UserPageState extends State<UserPage> {
       Get.snackbar("Success", message,
           colorText: Colors.white, backgroundColor: Colors.green);
 
-      Get.to(AdminPage());
+      Get.off(AdminPage());
     } else {
       Get.snackbar("Error", message,
           colorText: Colors.white, backgroundColor: Colors.red);
@@ -86,12 +86,6 @@ class _UserPageState extends State<UserPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-            onPressed: (() => Navigator.pop(context)),
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            )),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -222,12 +216,10 @@ class _UserPageState extends State<UserPage> {
                       children: [
                         Image.network(
                           widget.qrCode,
-                          height: 120.h,
+                          height: 125.h,
                         ), //widget.qrCode
-                        SizedBox(
-                          height: 3.h,
-                        ),
-                        Text("barcode") //barcode
+
+                        //barcode
                       ],
                     ),
                   ),
