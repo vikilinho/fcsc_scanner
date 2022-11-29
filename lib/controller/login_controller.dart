@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:fcsc_admin/locator.dart';
@@ -24,20 +23,13 @@ class LoginController extends GetxController {
     isLoading.value = false;
     switch (response.statusCode) {
       case 200:
-        // var body = json.decode(response.body.toString());
-        // var token = body['objectValue']['token'];
         Map<String, dynamic> map = response.body;
 
         var token = map['objectValue']['token'];
         log(token.toString());
 
-        // print(resp);
-        // log(token);
         prefs.setString('pass', token);
-        // Get.snackbar("Login Successfull", "",
-        //     duration: Duration(seconds: 5),
-        //     colorText: Colors.white,
-        //     backgroundColor: Colors.green);
+
         Get.off(() => AdminPage());
         break;
       case 400:

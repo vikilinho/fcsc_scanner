@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,6 +84,9 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+            onPressed: (() => Get.off(() => AdminPage())),
+            icon: Icon(Icons.arrow_back, color: Colors.black)),
         elevation: 0,
       ),
       body: SafeArea(
@@ -100,13 +102,32 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   Column(
                     children: [
+                      // CircleAvatar(
+                      //   backgroundColor: Colors.black,
+                      //   radius: 68,
+                      //   child: CircleAvatar(
+                      //     radius: 65,
+                      //     backgroundColor: Colors.transparent,
+                      //     backgroundImage: NetworkImage(
+                      //       widget.photoUrl,
+                      //     ),
+                      //   ),
+                      // ),
                       CircleAvatar(
                         backgroundColor: Colors.black,
                         radius: 68,
                         child: CircleAvatar(
                           radius: 65,
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(widget.photoUrl),
+                          child: Image.network(widget.photoUrl, errorBuilder:
+                              (BuildContext context, Object exception,
+                                  StackTrace? stackTrace) {
+                            return const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 50,
+                            );
+                          }),
                         ),
                       ),
                       SizedBox(height: 5.h),
@@ -214,10 +235,11 @@ class _UserPageState extends State<UserPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
-                          widget.qrCode,
-                          height: 125.h,
-                        ), //widget.qrCode
+                        Image.network(widget.qrCode, height: 125.h,
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                          return const Text('Image load error');
+                        }), //widget.qrCode
 
                         //barcode
                       ],
