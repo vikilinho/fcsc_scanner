@@ -391,7 +391,7 @@ class _AdminPageState extends State<AdminPage> {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           await prefs.remove('pass');
-                          Get.to(() => HomeScreen());
+                          Get.off(() => HomeScreen());
                         },
                         child: Container(
                           width: 300.w,

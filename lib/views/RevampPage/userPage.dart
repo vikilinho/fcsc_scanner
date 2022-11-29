@@ -244,26 +244,14 @@ class _UserPageState extends State<UserPage> {
                               ))),
                           onPressed: () async {
                             //call admit endpoint
-                            DateTime now = new DateTime.now();
-                            DateTime date =
-                                new DateTime(now.year, now.month, now.day);
-                            String scheduleDate =
-                                date.toUtc().toIso8601String();
-                            final prefs = await SharedPreferences.getInstance();
-
-                            prefs.getString("selectedLocation");
 
                             var candidateDetails = {
                               // "id": 0,
                               "serveQuizId": widget.serveQuizId,
-                              "location": prefs
-                                  .getString("selectedLocation")
-                                  .toString(),
-                              "scheduleDate": scheduleDate,
+
                               "candidateId": widget.candidateId
                             };
                             admitCandidate(candidateDetails: candidateDetails);
-                            log(prefs.getString("selectedLocation").toString());
                           },
                           child: Text('Admit Candidate',
                               style: TextStyle(color: Colors.white))),

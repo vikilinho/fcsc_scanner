@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // loadData();
     getMyTk().whenComplete(() async {
       Timer(Duration(milliseconds: 2000),
-          () => Get.off(finalPass == null ? HomeScreen() : AdminPage()));
+          () => Get.off(() => finalPass == null ? HomeScreen() : AdminPage()));
     });
     super.initState();
   }

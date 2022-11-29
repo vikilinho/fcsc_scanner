@@ -164,35 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                     height: 16.h,
                                   ),
-                                  Text("Select Location"),
-                                  SizedBox(height: 2.h),
-                                  DropdownSearch<String>(
-                                    popupProps: PopupProps.menu(
-                                      showSelectedItems: true,
-                                      showSearchBox: true,
-                                      disabledItemFn: (String s) =>
-                                          s.startsWith('I'),
-                                    ),
-                                    items: locations,
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
-                                        labelText: "Location",
-                                        hintText: "State",
-                                        filled: true,
-                                        fillColor: Color(0xff12072B1C),
-                                      ),
-                                    ),
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        selectedLocation = value;
-
-                                        log(selectedLocation);
-                                      });
-                                    },
-
-                                    // selectedItem: "Brazil",
-                                  ),
                                 ],
                               ),
                             )),
@@ -216,11 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     selectedLocation == null) {
                                   Login customerDetails = Login(
                                       _email_address.text, _password.text);
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  prefs.setString(
-                                      "selectedLocation", selectedLocation);
 
                                   model.login(customerDetails);
                                 }
