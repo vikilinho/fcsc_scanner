@@ -113,21 +113,24 @@ class _UserPageState extends State<UserPage> {
                       //     ),
                       //   ),
                       // ),
+
                       CircleAvatar(
                         backgroundColor: Colors.black,
                         radius: 68,
                         child: CircleAvatar(
                           radius: 65,
-                          backgroundColor: Colors.transparent,
-                          child: Image.network(widget.photoUrl, errorBuilder:
-                              (BuildContext context, Object exception,
-                                  StackTrace? stackTrace) {
-                            return const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 50,
-                            );
-                          }),
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: Image.network(widget.photoUrl, errorBuilder:
+                                (BuildContext context, Object exception,
+                                    StackTrace? stackTrace) {
+                              return const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 50,
+                              );
+                            }),
+                          ),
                         ),
                       ),
                       SizedBox(height: 5.h),
