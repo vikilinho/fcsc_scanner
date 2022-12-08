@@ -323,7 +323,7 @@ class _AdminPageState extends State<AdminPage> {
               ),
               SizedBox(height: 30.h),
               Text(
-                "Enter candidate’s exam number to validate",
+                "Enter candidate’s control number to validate",
                 style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
