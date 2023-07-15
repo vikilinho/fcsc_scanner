@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fcsc_admin/component/constants.dart';
 import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   bool isLoading = false;
+
   Future admitCandidate({
     required Map candidateDetails,
   }) async {
@@ -43,8 +45,7 @@ class _UserPageState extends State<UserPage> {
     isLoading = true;
     setState(() {});
     log("request body ==> $body");
-    var url =
-        "https://testminerc.azurewebsites.net/api/Quiz/Candidate/Attendance";
+    var url = "$BASE_URL/Quiz/Candidate/Attendance";
 
     log(url);
 
@@ -62,7 +63,7 @@ class _UserPageState extends State<UserPage> {
     setState(() {});
     var decode = jsonDecode(response.body);
 
-    log(decode.toString());
+    log(response.body);
 
     var message = decode['statusMessage'];
     log(response.statusCode.toString());
@@ -71,6 +72,7 @@ class _UserPageState extends State<UserPage> {
     if (response.statusCode == 200) {
       Get.snackbar("Success", message,
           colorText: Colors.white, backgroundColor: Color(0xff4c12ab));
+      log(response.body);
 
       Get.off(AdminPage());
     } else {
@@ -161,8 +163,8 @@ class _UserPageState extends State<UserPage> {
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
                         radius: 50,
-                        child: Image.asset("images/nerc.png"),
-                      )
+                        child: Image.asset("images/iXam_logo-trimmed.png"),
+                      ),
                     ],
                   ),
                   SizedBox(width: 24.w),
@@ -170,7 +172,7 @@ class _UserPageState extends State<UserPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "NERC 2022 Recruitment\nExamination",
+                        "Ixam Examination Portal",
                         style: TextStyle(
                             color: Color(0xff79807C),
                             fontSize: 14.sp,
@@ -213,7 +215,7 @@ class _UserPageState extends State<UserPage> {
                             Text(
                               widget.examNumber,
                               style: TextStyle(
-                                  color: Color(0xff219653),
+                                  color: Color(0xff4c12ab),
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400),
                             )
@@ -254,7 +256,10 @@ class _UserPageState extends State<UserPage> {
                 height: 30.h,
               ),
               isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      color: Color(0xff4c12ab),
+                    ))
                   : Container(
                       width: 300.w,
                       height: 40.h,

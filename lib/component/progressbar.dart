@@ -18,7 +18,7 @@ class ProgressBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4c12ab)),
           ),
         ),
         Padding(

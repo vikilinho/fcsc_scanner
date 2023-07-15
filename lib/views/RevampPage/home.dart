@@ -1,4 +1,5 @@
 import 'package:fcsc_admin/controller/login_controller.dart';
+import 'package:fcsc_admin/models/login.dart';
 import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 
 import 'package:flutter/material.dart';
@@ -81,17 +82,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                         child: Column(
                       children: [
-                        SizedBox(
-                          child: Image.asset("images/playstore.png"),
-                          height: 100.74.h,
-                          width: 120.74.h,
+                        Image.asset(
+                          "images/iXam_logo-trimmed.png",
+                          width: 150.w,
+                          height: 100.h,
                         ),
                         SizedBox(height: 40.74.h),
                         Text("Welcome Back!",
                             style: TextStyle(
                                 fontFamily: "MuseoSans_500.otf",
                                 fontSize: 28.sp,
-                                color: Color(0xff024126),
+                                color: Color.fromARGB(255, 126, 76, 206),
                                 fontWeight: FontWeight.w700)),
                         SizedBox(height: 12.h),
                         Text("Enter your login details below to continue",
@@ -183,14 +184,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(10),
                                   ))),
                               onPressed: () async {
-                                // if (_formKey.currentState!.validate() ||
-                                //     selectedLocation == null) {
-                                //   Login customerDetails = Login(
-                                //       _email_address.text, _password.text);
+                                if (_formKey.currentState!.validate() ||
+                                    selectedLocation == null) {
+                                  Login customerDetails = Login(
+                                      _email_address.text, _password.text);
 
-                                //   model.login(customerDetails);
-                                // }
-                                Get.to(() => AdminPage());
+                                  model.login(customerDetails);
+                                }
+                                // Get.to(() => AdminPage());
                               },
                               child: Text('Sign In',
                                   style: TextStyle(

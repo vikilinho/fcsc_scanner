@@ -45,10 +45,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              child: Image.asset("images/playstore.png"),
-              height: 100.74.h,
-              width: 120.74.h,
+            Image.asset(
+              "images/iXam_logo-trimmed.png",
+              width: 150.w,
+              height: 200.h,
             ),
           ],
         ),

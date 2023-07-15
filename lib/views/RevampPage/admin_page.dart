@@ -379,21 +379,21 @@ class _AdminPageState extends State<AdminPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ))),
                             onPressed: () async {
-                              // if (_formKey.currentState!.validate()) {
-                              //   validateNumber();
-                              // }
-                              Get.to(() => UserPage(
-                                    serveQuizId: 2,
-                                    candidateId: 2,
-                                    firstName: "",
-                                    lastName:
-                                        "mybody.objectValue!.lastName.toString()",
-                                    photoUrl: "",
-                                    examNumber: "",
-                                    qrCode:
-                                        " mybody.objectValue!.qrCode.toString()",
-                                    controlNo: "",
-                                  ));
+                              if (_formKey.currentState!.validate()) {
+                                validateNumber();
+                              }
+                              // Get.to(() => UserPage(
+                              //       serveQuizId: 2,
+                              //       candidateId: 2,
+                              //       firstName: "",
+                              //       lastName:
+                              //           "mybody.objectValue!.lastName.toString()",
+                              //       photoUrl: "",
+                              //       examNumber: "",
+                              //       qrCode:
+                              //           " mybody.objectValue!.qrCode.toString()",
+                              //       controlNo: "",
+                              //     ));
                             },
                             child: Text('Validate',
                                 style: TextStyle(
