@@ -1,7 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'dart:convert';
 
 import 'package:fcsc_admin/component/constants.dart';
-import 'package:fcsc_admin/component/ixam_card.dart';
 import 'package:fcsc_admin/component/progressbar.dart';
 import 'package:fcsc_admin/models/new_validator.dart';
 import 'package:fcsc_admin/views/RevampPage/home.dart';
@@ -45,6 +46,7 @@ class _NewValidationScreenState extends State<NewValidationScreen> {
             Get.to(UserCard());
           }
         });
+        return null;
       });
     } on PlatformException {
       controlNumber = 'Failed to get platform version.';

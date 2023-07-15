@@ -1,8 +1,5 @@
-import 'dart:developer';
-
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fcsc_admin/controller/login_controller.dart';
-import 'package:fcsc_admin/models/login.dart';
+import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -73,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (model) => ModalProgressHUD(
               inAsyncCall: model.isLoading.value,
               progressIndicator: SpinKitRipple(
-                color: Colors.green,
+                color: Color(0xff4c12ab),
                 size: 100,
               ),
               child: Scaffold(
@@ -85,8 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                         child: Column(
                       children: [
-                        Image.asset("images/Testmi.png"),
-                        SizedBox(height: 60.74.h),
+                        SizedBox(
+                          child: Image.asset("images/playstore.png"),
+                          height: 100.74.h,
+                          width: 120.74.h,
+                        ),
+                        SizedBox(height: 40.74.h),
                         Text("Welcome Back!",
                             style: TextStyle(
                                 fontFamily: "MuseoSans_500.otf",
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             model.isPasswordVisible.value
                                                 ? Icons.visibility_off
                                                 : Icons.visibility,
-                                            color: Color(0xff219653),
+                                            color: Color(0xff4c12ab), //219653
                                           ),
                                           onPressed: () =>
                                               model.togglePasswordVisibility(),
@@ -176,23 +176,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Color(0xff219653)),
+                                      Color(0xff4c12ab)),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ))),
                               onPressed: () async {
-                                if (_formKey.currentState!.validate() ||
-                                    selectedLocation == null) {
-                                  Login customerDetails = Login(
-                                      _email_address.text, _password.text);
+                                // if (_formKey.currentState!.validate() ||
+                                //     selectedLocation == null) {
+                                //   Login customerDetails = Login(
+                                //       _email_address.text, _password.text);
 
-                                  model.login(customerDetails);
-                                }
+                                //   model.login(customerDetails);
+                                // }
+                                Get.to(() => AdminPage());
                               },
                               child: Text('Sign In',
-                                  style: TextStyle(color: Colors.white))),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.sp))),
                         ),
                       ],
                     )),

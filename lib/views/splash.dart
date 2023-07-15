@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:fcsc_admin/views/RevampPage/admin_page.dart';
 import 'package:fcsc_admin/views/RevampPage/home.dart';
-import 'package:fcsc_admin/views/new_validationScreen.dart';
-import 'package:fcsc_admin/views/validation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +45,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("images/Testmi.png"),
+            SizedBox(
+              child: Image.asset("images/playstore.png"),
+              height: 100.74.h,
+              width: 120.74.h,
+            ),
           ],
         ),
       )),

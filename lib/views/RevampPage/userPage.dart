@@ -70,7 +70,7 @@ class _UserPageState extends State<UserPage> {
 
     if (response.statusCode == 200) {
       Get.snackbar("Success", message,
-          colorText: Colors.white, backgroundColor: Colors.green);
+          colorText: Colors.white, backgroundColor: Color(0xff4c12ab));
 
       Get.off(AdminPage());
     } else {
@@ -261,7 +261,7 @@ class _UserPageState extends State<UserPage> {
                       child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Color(0xff219653)),
+                                  MaterialStateProperty.all(Color(0xff4c12ab)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -279,7 +279,8 @@ class _UserPageState extends State<UserPage> {
                             admitCandidate(candidateDetails: candidateDetails);
                           },
                           child: Text('Admit Candidate',
-                              style: TextStyle(color: Colors.white))),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.sp))),
                     ),
             ],
           ),

@@ -178,6 +178,7 @@ class _AdminPageState extends State<AdminPage> {
             scanCard();
           }
         });
+        return null;
       });
     } on PlatformException {
       controlNumber = 'Failed to get platform version.';
@@ -229,7 +230,7 @@ class _AdminPageState extends State<AdminPage> {
                       Text("Welcome Back",
                           style: TextStyle(
                               fontSize: 20.sp,
-                              color: Color(0xff024126),
+                              color: Color(0xff4c12ab),
                               fontWeight: FontWeight.w700))
                     ],
                   ),
@@ -371,19 +372,32 @@ class _AdminPageState extends State<AdminPage> {
                         child: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    Color(0xff219653)),
+                                    Color(0xff4c12ab)),
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ))),
                             onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                validateNumber();
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              //   validateNumber();
+                              // }
+                              Get.to(() => UserPage(
+                                    serveQuizId: 2,
+                                    candidateId: 2,
+                                    firstName: "",
+                                    lastName:
+                                        "mybody.objectValue!.lastName.toString()",
+                                    photoUrl: "",
+                                    examNumber: "",
+                                    qrCode:
+                                        " mybody.objectValue!.qrCode.toString()",
+                                    controlNo: "",
+                                  ));
                             },
                             child: Text('Validate',
-                                style: TextStyle(color: Colors.white))),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.sp))),
                       ),
                       SizedBox(height: 80.h),
                       GestureDetector(
